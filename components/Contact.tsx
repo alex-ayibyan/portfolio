@@ -2,11 +2,43 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setStatus("error");
+      setErrorMessage(data.error ?? "Er ging iets mis.");
+    } else {
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
+    }
+  };
 
   return (
     <section id="contact" className="min-h-screen py-20 relative" ref={ref}>
@@ -45,6 +77,7 @@ export default function Contact() {
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -57,7 +90,7 @@ export default function Contact() {
                   <div>
                     <p className="text-sm text-muted font-display">Email</p>
                     <a
-                      href="mailto:jouw@email.com"
+                      href="mailto:alex.ayibyan@gmail.com"
                       className="text-white hover:text-accent transition-colors duration-300"
                     >
                       alex.ayibyan@gmail.com
@@ -72,6 +105,7 @@ export default function Contact() {
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -102,12 +136,14 @@ export default function Contact() {
                   href="https://github.com/alex-ayibyan"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="GitHub profiel van Alex Ayibyan"
                   className="w-12 h-12 border border-accent hover:bg-accent transition-all duration-300 flex items-center justify-center group"
                 >
                   <svg
                     className="w-5 h-5 text-accent group-hover:text-white transition-colors duration-300"
                     fill="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                   </svg>
@@ -116,12 +152,14 @@ export default function Contact() {
                   href="https://www.linkedin.com/in/alex-ayibyan-638787301/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="LinkedIn profiel van Alex Ayibyan"
                   className="w-12 h-12 border border-accent hover:bg-accent transition-all duration-300 flex items-center justify-center group"
                 >
                   <svg
                     className="w-5 h-5 text-accent group-hover:text-white transition-colors duration-300"
                     fill="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                   </svg>
@@ -131,6 +169,7 @@ export default function Contact() {
           </motion.div>
 
           <motion.form
+            onSubmit={handleSubmit}
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -146,7 +185,11 @@ export default function Contact() {
               <input
                 type="text"
                 id="name"
-                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300"
+                value={form.name}
+                onChange={handleChange}
+                required
+                disabled={status === "loading"}
+                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300 disabled:opacity-50"
                 placeholder="Jouw naam"
               />
             </div>
@@ -161,7 +204,11 @@ export default function Contact() {
               <input
                 type="email"
                 id="email"
-                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300"
+                value={form.email}
+                onChange={handleChange}
+                required
+                disabled={status === "loading"}
+                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300 disabled:opacity-50"
                 placeholder="jouw@email.com"
               />
             </div>
@@ -175,17 +222,60 @@ export default function Contact() {
               </label>
               <textarea
                 id="message"
+                value={form.message}
+                onChange={handleChange}
+                required
+                disabled={status === "loading"}
                 rows={6}
-                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300 resize-none"
+                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300 resize-none disabled:opacity-50"
                 placeholder="Jouw bericht..."
               />
             </div>
 
+            {status === "error" && (
+              <p className="text-red-400 text-sm font-display">{errorMessage}</p>
+            )}
+
+            {status === "success" && (
+              <p className="text-green-400 text-sm font-display">
+                Bericht verzonden! Ik neem zo snel mogelijk contact op.
+              </p>
+            )}
+
             <button
               type="submit"
-              className="w-full px-8 py-4 bg-accent hover:bg-highlight transition-colors duration-300 font-display text-sm tracking-wider uppercase"
+              disabled={status === "loading" || status === "success"}
+              className="w-full px-8 py-4 bg-accent hover:bg-highlight transition-colors duration-300 font-display text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              Verstuur Bericht
+              {status === "loading" ? (
+                <>
+                  <svg
+                    className="w-4 h-4 animate-spin"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8H4z"
+                    />
+                  </svg>
+                  Versturen...
+                </>
+              ) : status === "success" ? (
+                "Verzonden!"
+              ) : (
+                "Verstuur Bericht"
+              )}
             </button>
           </motion.form>
         </div>

@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(wc -l /c/Users/alexa/Documents/Projects/Portfolio/portfolio-site/components/*.tsx /c/Users/alexa/Documents/Projects/Portfolio/portfolio-site/app/*.tsx)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
