@@ -32,16 +32,26 @@ export default function About() {
           >
             <div className="space-y-6 text-lg text-muted leading-relaxed">
               <p>
-                Hallo! Ik ben een gedreven IT-professional met een passie voor het creëren van slimme, efficiënte en toekomstgerichte digitale oplossingen.
+                Ik ben een Bachelor IT-student met een sterke interesse in
+                software development, van gebruiksvriendelijke frontends tot
+                performante backend-oplossingen.
               </p>
               <p>
-                Met ruime ervaring in webontwikkeling, backend-systemen en cloud-infrastructuur heb ik diverse projecten succesvol gerealiseerd die niet alleen technisch sterk zijn, maar ook concrete meerwaarde bieden voor gebruikers en organisaties.
+                In projecten zoals FindMySpot en GoSmartLib werk ik aan
+                applicaties die echte problemen aanpakken, met focus op
+                duidelijke interfaces, logische flows en betrouwbare
+                functionaliteit.
               </p>
               <p>
-                Ik combineer technische expertise met een oplossingsgerichte mindset en streef altijd naar kwaliteit, schaalbaarheid en gebruiksvriendelijkheid. Daarnaast blijf ik mezelf voortdurend ontwikkelen door nieuwe technologieën en innovaties actief te verkennen.
+                Mijn technische basis ligt in React, Next.js, Node.js, .NET,
+                Spring Boot en databases zoals PostgreSQL en MySQL. Daarnaast
+                verdiep ik me ook in data en visualisatie met tools zoals Power
+                BI, Streamlit, Jupyter en Matplotlib.
               </p>
               <p>
-                Mijn doel is om systemen te bouwen die betrouwbaar presteren, processen verbeteren en een blijvende impact maken.
+                Ik werk graag gestructureerd, leer snel bij en haal veel
+                motivatie uit het bouwen van software die zowel technisch sterk
+                is als echt bruikbaar voor de eindgebruiker.
               </p>
               <div className="pt-4">
                 <a
@@ -81,7 +91,9 @@ export default function About() {
                 <motion.div
                   key={group.title}
                   initial={{ opacity: 0, y: 30 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  animate={
+                    isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
+                  }
                   transition={{ duration: 0.5, delay: 0.55 + groupIndex * 0.1 }}
                   className="border border-accent border-opacity-20 bg-secondary p-5"
                 >
