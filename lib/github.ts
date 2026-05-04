@@ -1,4 +1,4 @@
-import { githubEnrichments, hiddenRepos, manualProjects } from "@/data/projects";
+import { githubEnrichments, hiddenRepos, manualProjects, projectOrder } from "@/data/projects";
 
 type GitHubRepo = {
   id: number;
@@ -87,5 +87,16 @@ export async function getProjects(): Promise<Project[]> {
     console.error("GitHub API fetch failed:", err);
   }
 
-  return [...githubProjects, ...manualProjects];
+  const all = [...manualProjects, ...githubProjects];
+
+  const getKey = (p: Project) =>
+    typeof p.id === "string" ? p.id : p.github.split("/").pop() ?? "";
+
+  return all.sort((a, b) => {
+    const ai = projectOrder.indexOf(getKey(a));
+    const bi = projectOrder.indexOf(getKey(b));
+    const aPos = ai === -1 ? projectOrder.length : ai;
+    const bPos = bi === -1 ? projectOrder.length : bi;
+    return aPos - bPos;
+  });
 }

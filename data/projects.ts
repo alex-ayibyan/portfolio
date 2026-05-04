@@ -6,10 +6,21 @@ export type ProjectEnrichment = Partial<
   tags?: string[];
 };
 
+export const projectOrder: string[] = [
+  "gosmartlib",
+  "FindMySpotWebsite",
+  "verkeersongevallen-belgie",
+  "VanAschVisuals",
+  "CityTripApplication",
+  "UfoSightingApp",
+  "GameProject",
+];
+
 export const hiddenRepos: string[] = [
   "juice-shop",
   "IctArchitecture",
   "portfolio",
+  "RentApp"
 ];
 
 export const githubEnrichments: Record<string, ProjectEnrichment> = {
@@ -26,12 +37,23 @@ export const githubEnrichments: Record<string, ProjectEnrichment> = {
       "Interactieve grafieken en kaartweergave",
       "Gebaseerd op open overheidsdata",
     ],
-    tags: ["Python", "Pandas", "Matplotlib", "Jupyter"],
+    tags: ["Python", "Pandas", "Matplotlib", "Jupyter", "Streamlit"],
     link: "https://trafficaccidents.streamlit.app/",
+    image: "/verkeersdata_homepage.png",
   },
   VanAschVisuals: {
     image: "/vanaschvisuals_mainpage.png",
-    tags: ["Next.js"]
+    tags: ["Next.js"],
+  },
+  CityTripApplication: {
+    image: "/citytripapp_homepage.png",
+  },
+  GameProject: {
+    image: "/gameproject_game.png",
+  },
+  UfoSightingApp: {
+    image: "/ufosightingapp_homepage.jpeg",
+    tags: ["React Native"],
   },
   FindMySpotWebsite: {
     title: "FindMySpot - Parkeerapp (In Progress)",

@@ -111,7 +111,7 @@ export default function Projects({ projects }: ProjectsProps) {
                     src={project.image}
                     alt={`Preview of ${project.title}`}
                     fill
-                    className="object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.03]"
+                    className="object-contain opacity-90 transition-transform duration-500 group-hover:scale-[1.03]"
                     sizes="(max-width: 1024px) 100vw, 45vw"
                   />
                 ) : (
@@ -234,7 +234,7 @@ export default function Projects({ projects }: ProjectsProps) {
                         src={selectedProject.image}
                         alt={`Screenshot of ${selectedProject.title}`}
                         fill
-                        className="object-cover"
+                        className="object-contain"
                         sizes="(max-width: 1024px) 100vw, 55vw"
                       />
                     ) : (
@@ -342,7 +342,7 @@ export default function Projects({ projects }: ProjectsProps) {
                             src={img}
                             alt={`${selectedProject.title} gallery image ${idx + 1}`}
                             fill
-                            className="object-cover"
+                            className="object-contain"
                             sizes="(max-width: 768px) 100vw, 30vw"
                           />
                         </div>
