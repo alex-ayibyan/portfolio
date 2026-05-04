@@ -6,10 +6,22 @@
   :root {
     --font-display: 'Space Mono', monospace;
     --font-body: 'Work Sans', sans-serif;
+    --bg-base: #0d1117;
+    --bg-panel: #161b22;
+    --accent: #5eead4;
+    --accent-soft: #93c5fd;
+    --muted: #9ca9bc;
   }
   
   body {
     @apply bg-primary text-white font-body;
+    background-image:
+      radial-gradient(circle at top left, rgba(94, 234, 212, 0.12), transparent 28%),
+      radial-gradient(circle at top right, rgba(147, 197, 253, 0.1), transparent 24%),
+      radial-gradient(circle at bottom center, rgba(244, 114, 182, 0.06), transparent 30%),
+      linear-gradient(180deg, #0d1117 0%, #11161d 50%, #0c1016 100%);
+    background-attachment: fixed;
+    color-scheme: dark;
   }
 
   html {
@@ -23,7 +35,7 @@
   }
 
   .glow-effect {
-    text-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+    text-shadow: 0 0 24px rgba(94, 234, 212, 0.28);
   }
 }
 
@@ -33,22 +45,22 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0E27;
+  background: #0d1117;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FF6B35;
+  background: linear-gradient(180deg, #5eead4 0%, #93c5fd 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #F7931E;
+  background: linear-gradient(180deg, #7dd3fc 0%, #c4b5fd 100%);
 }
 
 /* Selection */
 ::selection {
-  background-color: #FF6B35;
-  color: white;
+  background-color: rgba(94, 234, 212, 0.28);
+  color: #f8fafc;
 }
 
 /* Smooth animations */

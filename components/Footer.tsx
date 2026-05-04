@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-center md:text-left">
             <p className="text-muted text-sm">
-              © {new Date().getFullYear()} Portfolio. Alle rechten voorbehouden.
+              © {new Date().getFullYear()} Portfolio Alex Ayibyan. Alle rechten voorbehouden.
             </p>
           </div>
 

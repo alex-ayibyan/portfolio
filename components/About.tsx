@@ -31,7 +31,7 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="space-y-6 text-lg text-muted leading-relaxed">
-              <p>
+               <p>
                 Ik ben een Bachelor IT-student met een sterke interesse in
                 software development, van gebruiksvriendelijke frontends tot
                 performante backend-oplossingen.
@@ -91,9 +91,7 @@ export default function About() {
                 <motion.div
                   key={group.title}
                   initial={{ opacity: 0, y: 30 }}
-                  animate={
-                    isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-                  }
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                   transition={{ duration: 0.5, delay: 0.55 + groupIndex * 0.1 }}
                   className="border border-accent border-opacity-20 bg-secondary p-5"
                 >
