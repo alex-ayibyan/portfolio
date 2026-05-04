@@ -4,28 +4,41 @@
 
 @layer base {
   :root {
-    --font-display: 'Space Mono', monospace;
-    --font-body: 'Work Sans', sans-serif;
-    --bg-base: #0d1117;
-    --bg-panel: #161b22;
-    --accent: #5eead4;
-    --accent-soft: #93c5fd;
-    --muted: #9ca9bc;
+    --font-display: var(--font-sans), sans-serif;
+    --font-body: var(--font-sans), sans-serif;
+    --bg-base: #1a1a1a;
+    --bg-panel: #242424;
+    --accent: #FF4D5A;
+    --accent-soft: #FF8087;
+    --muted: #888888;
   }
-  
+
   body {
-    @apply bg-primary text-white font-body;
+    @apply bg-primary font-body;
+    color: #FAFAFA;
     background-image:
-      radial-gradient(circle at top left, rgba(94, 234, 212, 0.12), transparent 28%),
-      radial-gradient(circle at top right, rgba(147, 197, 253, 0.1), transparent 24%),
-      radial-gradient(circle at bottom center, rgba(244, 114, 182, 0.06), transparent 30%),
-      linear-gradient(180deg, #0d1117 0%, #11161d 50%, #0c1016 100%);
+      radial-gradient(circle at 14% 12%, rgba(255, 77, 90, 0.07), transparent 24%),
+      radial-gradient(circle at 84% 18%, rgba(250, 250, 250, 0.04), transparent 20%),
+      linear-gradient(180deg, #1a1a1a 0%, #1a1a1a 52%, #151515 100%);
     background-attachment: fixed;
     color-scheme: dark;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+    opacity: 0.35;
   }
 }
 
@@ -35,7 +48,7 @@
   }
 
   .glow-effect {
-    text-shadow: 0 0 24px rgba(94, 234, 212, 0.28);
+    text-shadow: 0 0 22px rgba(255, 77, 90, 0.28);
   }
 }
 
@@ -45,22 +58,22 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0d1117;
+  background: #1a1a1a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #5eead4 0%, #93c5fd 100%);
+  background: linear-gradient(180deg, #FF4D5A 0%, #FF8087 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #7dd3fc 0%, #c4b5fd 100%);
+  background: linear-gradient(180deg, #FF6B75 0%, #FF8087 100%);
 }
 
 /* Selection */
 ::selection {
-  background-color: rgba(94, 234, 212, 0.28);
-  color: #f8fafc;
+  background-color: rgba(255, 77, 90, 0.22);
+  color: #FAFAFA;
 }
 
 /* Smooth animations */

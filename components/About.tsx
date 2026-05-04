@@ -1,125 +1,100 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { skillGroups } from "@/data/skills";
 
 export default function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const flatSkills = skillGroups.flatMap((g) => g.skills).slice(0, 12);
+
+  const col0 = flatSkills.filter((_, i) => i % 3 === 0);
+  const col1 = flatSkills.filter((_, i) => i % 3 === 1);
+  const col2 = flatSkills.filter((_, i) => i % 3 === 2);
+
+  const SkillCard = ({ skill, index }: { skill: (typeof flatSkills)[0]; index: number }) => (
+    <motion.div
+      key={skill.name}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{ duration: 0.45, delay: 0.2 + index * 0.05 }}
+      className="rounded-xl p-[2px]"
+      style={{ background: "linear-gradient(135deg, #6B4EFF, #FF4D5A)" }}
+    >
+      <div className="rounded-[10px] bg-[#1a1a1a] flex flex-col items-center justify-center gap-2 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 px-2 py-3">
+        {skill.logo ? (
+          <img
+            src={skill.logo}
+            alt={skill.name}
+            className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 object-contain"
+          />
+        ) : (
+          <div className="flex h-10 w-10 items-center justify-center rounded bg-accent/10 font-display text-xs text-accent">
+            {skill.name.slice(0, 2).toUpperCase()}
+          </div>
+        )}
+        <span className="font-display text-[10px] uppercase tracking-[0.16em] text-white/90 text-center leading-tight">
+          {skill.name}
+        </span>
+      </div>
+    </motion.div>
+  );
 
   return (
-    <section id="about" className="min-h-screen py-20 relative" ref={ref}>
+    <section id="about" className="relative py-24" ref={ref}>
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
-          className="mb-16"
-        >
-          <h2 className="text-5xl md:text-7xl font-display font-bold mb-4">
-            Over <span className="text-gradient">Mij</span>
-          </h2>
-          <div className="w-24 h-1 bg-accent"></div>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, y: 28 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+            transition={{ duration: 0.7 }}
           >
-            <div className="space-y-6 text-lg text-muted leading-relaxed">
-               <p>
-                Ik ben een Bachelor IT-student met een sterke interesse in
-                software development, van gebruiksvriendelijke frontends tot
-                performante backend-oplossingen.
+            <h2 className="text-4xl font-display font-bold text-white sm:text-5xl">
+              About
+            </h2>
+
+            <div className="mt-8 space-y-6 text-base leading-8 text-slate-300">
+              <p>
+                I&apos;m a Bachelor IT student with a strong interest in full
+                stack development, backend systems, and data-driven
+                applications. I enjoy building software that is both technically
+                solid and genuinely useful for the people who use it.
               </p>
               <p>
-                In projecten zoals FindMySpot en GoSmartLib werk ik aan
-                applicaties die echte problemen aanpakken, met focus op
-                duidelijke interfaces, logische flows en betrouwbare
-                functionaliteit.
+                Through projects like FindMySpot and GoSmartLib, I&apos;ve worked
+                on web applications with clear interfaces, structured backend
+                logic, API integrations, and practical problem-solving. I&apos;m
+                especially interested in the mix of creativity, logic, and
+                continuous learning that comes with software development.
               </p>
               <p>
-                Mijn technische basis ligt in React, Next.js, Node.js, .NET,
-                Spring Boot en databases zoals PostgreSQL en MySQL. Daarnaast
-                verdiep ik me ook in data en visualisatie met tools zoals Power
-                BI, Streamlit, Jupyter en Matplotlib.
+                My stack includes React, Next.js, Node.js, .NET, Spring Boot,
+                SQL and data tools like Power BI, Streamlit and Jupyter. I like learning fast, working with purpose, and
+                improving every project I touch.
               </p>
-              <p>
-                Ik werk graag gestructureerd, leer snel bij en haal veel
-                motivatie uit het bouwen van software die zowel technisch sterk
-                is als echt bruikbaar voor de eindgebruiker.
-              </p>
-              <div className="pt-4">
-                <a
-                  href="mailto:alex.ayibyan@gmail.com"
-                  className="inline-flex items-center gap-2 text-accent hover:text-highlight transition-colors duration-300 font-display"
-                >
-                  <span>Neem contact op</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </a>
-              </div>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 28 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="flex justify-center gap-2 sm:gap-4"
           >
-            <h3 className="text-2xl font-display font-bold mb-6">
-              Vaardigheden
-            </h3>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {skillGroups.map((group, groupIndex) => (
-                <motion.div
-                  key={group.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                  transition={{ duration: 0.5, delay: 0.55 + groupIndex * 0.1 }}
-                  className="border border-accent border-opacity-20 bg-secondary p-5"
-                >
-                  <h4 className="mb-4 text-sm font-display uppercase tracking-[0.2em] text-accent">
-                    {group.title}
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {group.skills.map((skill, skillIndex) => (
-                      <motion.span
-                        key={skill}
-                        initial={{ opacity: 0, scale: 0.92 }}
-                        animate={
-                          isInView
-                            ? { opacity: 1, scale: 1 }
-                            : { opacity: 0, scale: 0.92 }
-                        }
-                        transition={{
-                          duration: 0.35,
-                          delay: 0.7 + groupIndex * 0.1 + skillIndex * 0.04,
-                        }}
-                        className="px-3 py-2 bg-primary border border-accent border-opacity-25 text-accent text-xs font-display tracking-wider transition-colors duration-300 cursor-default"
-                      >
-                        {skill}
-                      </motion.span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
+            {/* Left column — offset down */}
+            <div className="flex flex-col gap-2 sm:gap-4 mt-0 sm:mt-12">
+              {col0.map((skill, i) => <SkillCard key={skill.name} skill={skill} index={i * 3} />)}
+            </div>
+
+            {/* Center column — no offset */}
+            <div className="flex flex-col gap-2 sm:gap-4">
+              {col1.map((skill, i) => <SkillCard key={skill.name} skill={skill} index={i * 3 + 1} />)}
+            </div>
+
+            {/* Right column — offset down */}
+            <div className="flex flex-col gap-2 sm:gap-4 mt-0 sm:mt-12">
+              {col2.map((skill, i) => <SkillCard key={skill.name} skill={skill} index={i * 3 + 2} />)}
             </div>
           </motion.div>
         </div>

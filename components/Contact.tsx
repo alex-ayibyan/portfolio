@@ -1,15 +1,28 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+
+const contactItems = [
+  {
+    label: "Email",
+    value: "alex.ayibyan@gmail.com",
+    href: "mailto:alex.ayibyan@gmail.com",
+  },
+  {
+    label: "Location",
+    value: "Antwerp, Belgium",
+  }
+];
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle"
+  );
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (
@@ -33,7 +46,7 @@ export default function Contact() {
 
     if (!res.ok) {
       setStatus("error");
-      setErrorMessage(data.error ?? "Er ging iets mis.");
+      setErrorMessage(data.error ?? "Something went wrong.");
     } else {
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
@@ -41,242 +54,178 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="min-h-screen py-20 relative" ref={ref}>
+    <section id="contact" className="relative py-24" ref={ref}>
       <div className="container mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8 }}
-          className="mb-16"
+          className="mb-12 border border-white/10 bg-white/[0.03] p-8 backdrop-blur sm:p-10"
         >
-          <h2 className="text-5xl md:text-7xl font-display font-bold mb-4">
-            Laten we <span className="text-gradient">Praten</span>
-          </h2>
-          <div className="w-24 h-1 bg-accent"></div>
-          <p className="text-muted mt-6 max-w-2xl">
-            Heb je een vraag of wil je samenwerken? Neem gerust contact op!
+          <p className="mb-4 font-display text-xs uppercase tracking-[0.24em] text-accent">
+            Contact
           </p>
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end">
+            <h2 className="text-4xl font-display font-bold leading-tight sm:text-5xl lg:text-6xl">
+              Let&apos;s build something useful and well-crafted.
+            </h2>
+            <p className="max-w-2xl text-base leading-7 text-slate-300">
+              If you are looking for someone who enjoys thoughtful interfaces,
+              clean implementation, and turning requirements into working
+              software, this is a good place to start.
+            </p>
+          </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid gap-8 lg:grid-cols-[minmax(280px,0.75fr)_minmax(0,1.25fr)]">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-8"
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="space-y-5"
           >
-            <div>
-              <h3 className="text-2xl font-display font-bold mb-6">
-                Contact Informatie
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-accent bg-opacity-20 flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-accent"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted font-display">Email</p>
-                    <a
-                      href="mailto:alex.ayibyan@gmail.com"
-                      className="text-white hover:text-accent transition-colors duration-300"
-                    >
-                      alex.ayibyan@gmail.com
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-accent bg-opacity-20 flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-accent"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted font-display">Locatie</p>
-                    <p className="text-white">Antwerpen, België</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-display font-bold mb-4">Socials</h3>
-              <div className="flex gap-4">
-                <a
-                  href="https://github.com/alex-ayibyan"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub profiel van Alex Ayibyan"
-                  className="w-12 h-12 border border-accent hover:bg-accent transition-all duration-300 flex items-center justify-center group"
-                >
-                  <svg
-                    className="w-5 h-5 text-accent group-hover:text-white transition-colors duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
+            {contactItems.map((item) => (
+              <div
+                key={item.label}
+                className="border border-white/10 bg-[#1a1a1a]/80 p-5"
+              >
+                <p className="font-display text-[11px] uppercase tracking-[0.22em] text-slate-500">
+                  {item.label}
+                </p>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    className="mt-3 block text-base text-white transition-colors duration-300 hover:text-accent"
                   >
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/alex-ayibyan-638787301/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn profiel van Alex Ayibyan"
-                  className="w-12 h-12 border border-accent hover:bg-accent transition-all duration-300 flex items-center justify-center group"
-                >
-                  <svg
-                    className="w-5 h-5 text-accent group-hover:text-white transition-colors duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                  </svg>
-                </a>
+                    {item.value}
+                  </a>
+                ) : (
+                  <p className="mt-3 text-base text-white">{item.value}</p>
+                )}
               </div>
+            ))}
+
+            <div className="flex gap-4 pt-2">
+              <a
+                href="https://github.com/alex-ayibyan"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+                className="inline-flex h-12 w-12 items-center justify-center border border-white/10 bg-white/[0.03] text-slate-300 transition-colors duration-300 hover:border-accent hover:text-accent"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/alex-ayibyan-638787301/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+                className="inline-flex h-12 w-12 items-center justify-center border border-white/10 bg-white/[0.03] text-slate-300 transition-colors duration-300 hover:border-accent hover:text-accent"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
+              </a>
             </div>
           </motion.div>
 
           <motion.form
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-6"
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            transition={{ duration: 0.8, delay: 0.25 }}
+            className="border border-white/10 bg-[#1a1a1a]/80 p-7 sm:p-8"
           >
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-display tracking-wider uppercase mb-2"
-              >
-                Naam
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                disabled={status === "loading"}
-                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300 disabled:opacity-50"
-                placeholder="Jouw naam"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-display tracking-wider uppercase mb-2"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                disabled={status === "loading"}
-                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300 disabled:opacity-50"
-                placeholder="jouw@email.com"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-display tracking-wider uppercase mb-2"
-              >
-                Bericht
-              </label>
-              <textarea
-                id="message"
-                value={form.message}
-                onChange={handleChange}
-                required
-                disabled={status === "loading"}
-                rows={6}
-                className="w-full px-4 py-3 bg-secondary border border-transparent focus:border-accent outline-none transition-colors duration-300 resize-none disabled:opacity-50"
-                placeholder="Jouw bericht..."
-              />
-            </div>
-
-            {status === "error" && (
-              <p className="text-red-400 text-sm font-display">{errorMessage}</p>
-            )}
-
-            {status === "success" && (
-              <p className="text-green-400 text-sm font-display">
-                Bericht verzonden! Ik neem zo snel mogelijk contact op.
-              </p>
-            )}
-
-            <button
-              type="submit"
-              disabled={status === "loading" || status === "success"}
-              className="w-full px-8 py-4 bg-accent hover:bg-highlight transition-colors duration-300 font-display text-sm tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {status === "loading" ? (
-                <>
-                  <svg
-                    className="w-4 h-4 animate-spin"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
+            <div className="grid gap-6">
+              <div className="grid gap-6 md:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-2 block font-display text-[11px] uppercase tracking-[0.22em] text-slate-500"
                   >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v8H4z"
-                    />
-                  </svg>
-                  Versturen...
-                </>
-              ) : status === "success" ? (
-                "Verzonden!"
-              ) : (
-                "Verstuur Bericht"
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                    disabled={status === "loading"}
+                    className="w-full border border-white/10 bg-white/[0.03] px-4 py-3 text-white outline-none transition-colors duration-300 placeholder:text-slate-500 focus:border-accent disabled:opacity-50"
+                    placeholder="Your name"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block font-display text-[11px] uppercase tracking-[0.22em] text-slate-500"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                    disabled={status === "loading"}
+                    className="w-full border border-white/10 bg-white/[0.03] px-4 py-3 text-white outline-none transition-colors duration-300 placeholder:text-slate-500 focus:border-accent disabled:opacity-50"
+                    placeholder="you@example.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-2 block font-display text-[11px] uppercase tracking-[0.22em] text-slate-500"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  required
+                  disabled={status === "loading"}
+                  rows={7}
+                  className="w-full resize-none border border-white/10 bg-white/[0.03] px-4 py-3 text-white outline-none transition-colors duration-300 placeholder:text-slate-500 focus:border-accent disabled:opacity-50"
+                  placeholder="Tell me what you want to build."
+                />
+              </div>
+
+              {status === "error" && (
+                <p className="text-sm text-accent">{errorMessage}</p>
               )}
-            </button>
+
+              {status === "success" && (
+                <p className="text-sm text-white">
+                  Message sent — I&apos;ll get back to you soon.
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "loading" || status === "success"}
+                className="inline-flex items-center justify-center gap-3 border border-accent bg-accent px-6 py-4 font-display text-xs uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-accent/80 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {status === "loading" ? "Sending..." : status === "success" ? "Sent" : "Send message"}
+              </button>
+            </div>
           </motion.form>
         </div>
       </div>

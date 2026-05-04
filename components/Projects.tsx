@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useInView } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/lib/github";
 
 type ProjectsProps = {
@@ -17,7 +16,6 @@ export default function Projects({ projects }: ProjectsProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
 
-  // Prevent body scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = selectedProject ? "hidden" : "unset";
     return () => {
@@ -25,11 +23,9 @@ export default function Projects({ projects }: ProjectsProps) {
     };
   }, [selectedProject]);
 
-  // Focus management: move focus into modal on open, restore on close
   useEffect(() => {
     if (selectedProject) {
       triggerRef.current = document.activeElement as HTMLElement;
-      // Wait for animation frame so modal is rendered
       requestAnimationFrame(() => {
         modalRef.current?.focus();
       });
@@ -39,12 +35,12 @@ export default function Projects({ projects }: ProjectsProps) {
     }
   }, [selectedProject]);
 
-  // Close on Escape + focus trap
-  const handleModalKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleModalKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Escape") {
       setSelectedProject(null);
       return;
     }
+
     if (e.key !== "Tab") return;
 
     const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
@@ -60,153 +56,139 @@ export default function Projects({ projects }: ProjectsProps) {
         e.preventDefault();
         last.focus();
       }
-    } else {
-      if (document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+    } else if (document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
-  }, []);
+  };
 
   return (
-    <section id="projects" className="min-h-screen py-20 relative" ref={ref}>
+    <section id="projects" className="relative py-24" ref={ref}>
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
-          className="mb-16"
+          className="mb-14 flex flex-col gap-8 border border-white/10 bg-white/[0.03] p-8 backdrop-blur sm:p-10 lg:flex-row lg:items-end lg:justify-between"
         >
-          <h2 className="text-5xl md:text-7xl font-display font-bold mb-4">
-            Recente <span className="text-gradient">Projecten</span>
-          </h2>
-          <div className="w-24 h-1 bg-accent"></div>
-          <p className="text-muted mt-6 max-w-2xl">
-            Een selectie van projecten waar ik trots op ben. Elk project
-            vertegenwoordigt een unieke uitdaging en oplossing.
+          <div className="max-w-3xl">
+            <p className="mb-4 font-display text-xs uppercase tracking-[0.24em] text-accent">
+              Selected work
+            </p>
+            <h2 className="text-4xl font-display font-bold leading-tight sm:text-5xl lg:text-6xl">
+              Projects that show how I think, build, and ship.
+            </h2>
+          </div>
+          <p className="max-w-xl text-base leading-7 text-slate-300">
+            A mix of personal work and team-based builds where product thinking,
+            implementation quality, and clarity of execution matter just as much
+            as the tech stack.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 0.6, delay: index * 0.12 }}
               onClick={() => setSelectedProject(project)}
               role="button"
               tabIndex={0}
-              aria-label={`Bekijk details van ${project.title}`}
+              aria-label={`Open project details for ${project.title}`}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
                   setSelectedProject(project);
                 }
               }}
-              className="group relative bg-secondary p-8 hover:bg-opacity-80 transition-all duration-300 border border-transparent hover:border-accent cursor-pointer"
+              className="group grid cursor-pointer overflow-hidden border border-white/10 bg-[#1a1a1a]/80 transition-transform duration-300 hover:-translate-y-1 hover:border-accent/50 lg:grid-cols-[minmax(300px,0.95fr)_minmax(0,1.05fr)]"
             >
-              {/* Accent corner */}
-              <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-t-accent border-l-[40px] border-l-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-              <div className="relative z-10">
-                <h3 className="text-2xl font-display font-bold mb-4 group-hover:text-gradient transition-all duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-muted mb-6 leading-relaxed">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 bg-primary text-accent text-xs font-display tracking-wider uppercase border border-accent border-opacity-30"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex gap-4">
-                  {project.link !== project.github && (
-                    <a
-                      href={project.link}
-                      className="inline-flex items-center gap-2 text-sm font-display text-accent hover:text-highlight transition-colors duration-300"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span>Live Demo</span>
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        />
-                      </svg>
-                    </a>
-                  )}
-                  <a
-                    href={project.github}
-                    className="inline-flex items-center gap-2 text-sm font-display text-muted hover:text-white transition-colors duration-300"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                    <span>GitHub</span>
-                  </a>
-                </div>
-
-                {/* Click indicator */}
-                <div className="mt-6 pt-6 border-t border-accent border-opacity-20">
-                  <span className="text-xs font-display text-muted flex items-center gap-2 group-hover:text-accent transition-colors duration-300">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                      />
-                    </svg>
-                    Klik voor meer details
+              <div className="relative min-h-[260px] border-b border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent lg:min-h-[360px] lg:border-b-0 lg:border-r">
+                {project.image ? (
+                  <Image
+                    src={project.image}
+                    alt={`Preview of ${project.title}`}
+                    fill
+                    className="object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.03]"
+                    sizes="(max-width: 1024px) 100vw, 45vw"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-sm uppercase tracking-[0.2em] text-slate-500">
+                    No preview
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/88 via-[#1a1a1a]/20 to-transparent" />
+                <div className="absolute bottom-5 left-5 flex items-center gap-3">
+                  <span className="border border-accent/40 bg-[#1a1a1a]/70 px-3 py-1 font-display text-[10px] uppercase tracking-[0.22em] text-accent backdrop-blur">
+                    Case study
                   </span>
+                  <span className="font-display text-[10px] uppercase tracking-[0.22em] text-slate-300">
+                    0{index + 1}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col justify-between p-7 sm:p-8 lg:p-10">
+                <div>
+                  <div className="mb-5 flex flex-wrap gap-2">
+                    {project.tags.slice(0, 5).map((tag) => (
+                      <span
+                        key={tag}
+                        className="border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-slate-300"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <h3 className="max-w-2xl text-3xl font-display font-bold leading-tight text-white transition-colors duration-300 group-hover:text-accent sm:text-4xl">
+                    {project.title}
+                  </h3>
+
+                  <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300">
+                    {project.description}
+                  </p>
+                </div>
+
+                <div className="mt-8 flex flex-wrap items-center justify-between gap-5 border-t border-white/10 pt-6">
+                  <div className="flex flex-wrap gap-5">
+                    {project.link !== project.github && (
+                      <a
+                        href={project.link}
+                        onClick={(e) => e.stopPropagation()}
+                        className="font-display text-xs uppercase tracking-[0.2em] text-accent transition-colors duration-300 hover:text-highlight"
+                      >
+                        Live demo
+                      </a>
+                    )}
+                    <a
+                      href={project.github}
+                      onClick={(e) => e.stopPropagation()}
+                      className="font-display text-xs uppercase tracking-[0.2em] text-slate-300 transition-colors duration-300 hover:text-white"
+                    >
+                      Source
+                    </a>
+                  </div>
+
+                  <div className="inline-flex items-center gap-3 font-display text-xs uppercase tracking-[0.2em] text-slate-500 transition-colors duration-300 group-hover:text-accent">
+                    Open project
+                    <span className="text-base">+</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Project Detail Modal */}
         <AnimatePresence>
           {selectedProject && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-[#1a1a1a]/85 p-4 backdrop-blur-md"
               onClick={() => setSelectedProject(null)}
               aria-hidden="true"
             >
@@ -216,22 +198,21 @@ export default function Projects({ projects }: ProjectsProps) {
                 aria-modal="true"
                 aria-labelledby="modal-title"
                 tabIndex={-1}
-                initial={{ scale: 0.9, opacity: 0 }}
+                initial={{ scale: 0.96, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                exit={{ scale: 0.96, opacity: 0 }}
+                transition={{ type: "spring", damping: 26, stiffness: 280 }}
                 onClick={(e) => e.stopPropagation()}
                 onKeyDown={handleModalKeyDown}
-                className="bg-secondary border border-accent max-w-4xl w-full max-h-[90vh] overflow-y-auto relative outline-none"
+                className="relative max-h-[90vh] w-full max-w-5xl overflow-y-auto border border-white/12 bg-[#1a1a1a] outline-none"
               >
-                {/* Close button */}
                 <button
                   onClick={() => setSelectedProject(null)}
-                  aria-label="Sluit projectdetails"
-                  className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center bg-primary hover:bg-accent transition-colors duration-300 group"
+                  aria-label="Close project details"
+                  className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center border border-white/10 bg-[#1a1a1a]/85 text-slate-300 transition-colors duration-300 hover:border-accent hover:text-accent"
                 >
                   <svg
-                    className="w-6 h-6 text-accent group-hover:text-white transition-colors duration-300"
+                    className="h-5 w-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -246,172 +227,129 @@ export default function Projects({ projects }: ProjectsProps) {
                   </svg>
                 </button>
 
-                {/* Modal Content */}
-                <div className="p-8 md:p-12">
-                  {/* Project Image */}
-                  <div className="relative w-full h-64 md:h-96 bg-primary mb-8 overflow-hidden border border-accent border-opacity-20">
-                    {selectedProject.image && !selectedProject.image.includes("placeholder") ? (
+                <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,0.95fr)]">
+                  <div className="relative min-h-[280px] border-b border-white/10 lg:min-h-full lg:border-b-0 lg:border-r">
+                    {selectedProject.image ? (
                       <Image
                         src={selectedProject.image}
-                        alt={`Screenshot van ${selectedProject.title}`}
-                        className="w-full h-full object-contain"
+                        alt={`Screenshot of ${selectedProject.title}`}
                         fill
-                        sizes="(max-width: 768px) 100vw, 80vw"
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 55vw"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-muted font-display text-sm">
-                          Project Afbeelding
-                        </span>
+                      <div className="flex h-full items-center justify-center text-sm uppercase tracking-[0.2em] text-slate-500">
+                        Project image
                       </div>
                     )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent" />
                   </div>
 
-                  {/* Title */}
-                  <h3
-                    id="modal-title"
-                    className="text-4xl md:text-5xl font-display font-bold mb-4 text-gradient"
-                  >
-                    {selectedProject.title}
-                  </h3>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {selectedProject.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 bg-primary text-accent text-xs font-display tracking-wider uppercase border border-accent border-opacity-30"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Full Description */}
-                  <div className="mb-8">
-                    <h4 className="text-xl font-display font-bold mb-3 text-white">
-                      Over het Project
-                    </h4>
-                    <p className="text-muted leading-relaxed">
-                      {selectedProject.fullDescription ?? selectedProject.description}
+                  <div className="p-7 sm:p-10">
+                    <p className="font-display text-xs uppercase tracking-[0.24em] text-accent">
+                      Project overview
                     </p>
-                  </div>
-
-                  {/* Features */}
-                  {!!selectedProject.features?.length && (
-                    <div className="mb-8">
-                      <h4 className="text-xl font-display font-bold mb-4 text-white">
-                        Key Features
-                      </h4>
-                      <div className="grid md:grid-cols-2 gap-3">
-                        {selectedProject.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <svg
-                              className="w-5 h-5 text-accent flex-shrink-0 mt-0.5"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              aria-hidden="true"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                            <span className="text-muted text-sm">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Challenges */}
-                  {selectedProject.challenges && (
-                    <div className="mb-8">
-                      <h4 className="text-xl font-display font-bold mb-3 text-white">
-                        Uitdagingen & Oplossingen
-                      </h4>
-                      <p className="text-muted leading-relaxed">
-                        {selectedProject.challenges}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Gallery */}
-                  {!!selectedProject.gallery?.length && (
-                    <div className="mb-8">
-                      <h4 className="text-xl font-display font-bold mb-4 text-white">
-                        Screenshots
-                      </h4>
-                      <div className="grid md:grid-cols-3 gap-4">
-                        {selectedProject.gallery.map((img, idx) => (
-                          <div
-                            key={idx}
-                            className="relative w-full h-48 bg-primary overflow-hidden border border-accent border-opacity-20 hover:border-opacity-50 transition-all duration-300"
-                          >
-                            {img && !img.includes("placeholder") ? (
-                              <Image
-                                src={img}
-                                alt={`Screenshot ${idx + 1} van ${selectedProject.title}`}
-                                className="w-full h-full object-contain"
-                                fill
-                                sizes="(max-width: 768px) 50vw, 25vw"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <span className="text-muted font-display text-xs">
-                                  Screenshot {idx + 1}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Links */}
-                  <div className="flex flex-wrap gap-4 pt-6 border-t border-accent border-opacity-20">
-                    {selectedProject.link !== selectedProject.github && (
-                      <a
-                        href={selectedProject.link}
-                        className="px-8 py-3 bg-accent hover:bg-highlight transition-colors duration-300 font-display text-sm tracking-wider uppercase inline-flex items-center gap-2"
-                      >
-                        <span>Live Demo</span>
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      </a>
-                    )}
-                    <a
-                      href={selectedProject.github}
-                      className="px-8 py-3 border-2 border-accent hover:bg-accent hover:bg-opacity-10 transition-all duration-300 font-display text-sm tracking-wider uppercase inline-flex items-center gap-2"
+                    <h3
+                      id="modal-title"
+                      className="mt-4 text-3xl font-display font-bold leading-tight text-white sm:text-4xl"
                     >
-                      <svg
-                        className="w-4 h-4"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
+                      {selectedProject.title}
+                    </h3>
+
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {selectedProject.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-slate-300"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 space-y-7">
+                      <div>
+                        <h4 className="font-display text-sm uppercase tracking-[0.2em] text-slate-500">
+                          Context
+                        </h4>
+                        <p className="mt-3 leading-7 text-slate-300">
+                          {selectedProject.fullDescription ??
+                            selectedProject.description}
+                        </p>
+                      </div>
+
+                      {!!selectedProject.features?.length && (
+                        <div>
+                          <h4 className="font-display text-sm uppercase tracking-[0.2em] text-slate-500">
+                            Highlights
+                          </h4>
+                          <div className="mt-4 grid gap-3">
+                            {selectedProject.features.map((feature) => (
+                              <div
+                                key={feature}
+                                className="border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-300"
+                              >
+                                {feature}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {selectedProject.challenges && (
+                        <div>
+                          <h4 className="font-display text-sm uppercase tracking-[0.2em] text-slate-500">
+                            Challenge
+                          </h4>
+                          <p className="mt-3 leading-7 text-slate-300">
+                            {selectedProject.challenges}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-10 flex flex-wrap gap-4 border-t border-white/10 pt-6">
+                      {selectedProject.link !== selectedProject.github && (
+                        <a
+                          href={selectedProject.link}
+                          className="inline-flex items-center gap-3 border border-accent bg-accent px-5 py-3 font-display text-xs uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-accent/80"
+                        >
+                          Live demo
+                        </a>
+                      )}
+                      <a
+                        href={selectedProject.github}
+                        className="inline-flex items-center gap-3 border border-white/12 bg-white/[0.04] px-5 py-3 font-display text-xs uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:border-accent hover:text-accent"
                       >
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                      </svg>
-                      <span>GitHub</span>
-                    </a>
+                        GitHub
+                      </a>
+                    </div>
                   </div>
                 </div>
+
+                {!!selectedProject.gallery?.length && (
+                  <div className="border-t border-white/10 px-7 py-7 sm:px-10 sm:py-8">
+                    <h4 className="font-display text-sm uppercase tracking-[0.2em] text-slate-500">
+                      Gallery
+                    </h4>
+                    <div className="mt-5 grid gap-4 md:grid-cols-3">
+                      {selectedProject.gallery.map((img, idx) => (
+                        <div
+                          key={idx}
+                          className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-[#1a1a1a]"
+                        >
+                          <Image
+                            src={img}
+                            alt={`${selectedProject.title} gallery image ${idx + 1}`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 30vw"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </motion.div>
           )}

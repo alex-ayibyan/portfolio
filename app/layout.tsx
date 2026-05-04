@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { Space_Mono, Work_Sans } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import "./globals.css";
-
-const spaceMono = Space_Mono({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  variable: "--font-display",
-});
 
 const workSans = Work_Sans({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -55,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" className={`${spaceMono.variable} ${workSans.variable}`}>
+    <html lang="nl" className={`${workSans.variable}`} style={{ fontFamily: "var(--font-sans)" }}>
       <body>{children}</body>
     </html>
   );

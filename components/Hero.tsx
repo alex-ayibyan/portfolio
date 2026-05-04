@@ -1,98 +1,99 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRef, useState } from "react";
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [mouse, setMouse] = useState({ x: -9999, y: -9999 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleMouseLeave = () => setMouse({ x: -9999, y: -9999 });
+
+  const gridPattern =
+    "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)";
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Background gradient effect */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-accent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-highlight rounded-full blur-3xl"></div>
+    <section
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative flex min-h-screen items-center border-b border-white/10 pt-24 overflow-hidden"
+    >
+      <div className="absolute inset-0">
+        {/* Static dim grid */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: gridPattern,
+            backgroundSize: "72px 72px",
+            opacity: 0.04,
+          }}
+        />
+
+        {/* Bright grid revealed at mouse position */}
+        <div
+          className="absolute inset-0 transition-opacity duration-300"
+          style={{
+            backgroundImage: gridPattern,
+            backgroundSize: "72px 72px",
+            opacity: 0.18,
+            WebkitMaskImage: `radial-gradient(circle 280px at ${mouse.x}px ${mouse.y}px, black 0%, transparent 100%)`,
+            maskImage: `radial-gradient(circle 280px at ${mouse.x}px ${mouse.y}px, black 0%, transparent 100%)`,
+          }}
+        />
+
+        {/* Accent glow at cursor */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle 220px at ${mouse.x}px ${mouse.y}px, rgba(255,77,90,0.10), transparent 100%)`,
+          }}
+        />
+
+        {/* Static ambient blob */}
+        <div className="absolute left-[12%] top-24 h-64 w-64 rounded-full bg-accent/8 blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl"
-        >
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="inline-block mb-4"
-          >
-            <span className="text-accent font-display text-sm tracking-widest uppercase">
-              IT Professional
-            </span>
-          </motion.div>
-
+      <div className="container relative z-10 mx-auto px-6">
+        <div className="max-w-4xl">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-6xl md:text-8xl font-display font-bold mb-6 leading-tight"
+            transition={{ duration: 0.7 }}
+            className="text-4xl font-display font-bold leading-tight text-white sm:whitespace-nowrap sm:text-6xl lg:text-8xl"
           >
-            Building Digital
-            <br />
-            <span className="text-gradient">Experiences</span>
+            Hello, I&apos;m <span className="text-accent">Alex Ayibyan</span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-xl md:text-2xl text-muted max-w-2xl mb-8 font-light"
+            transition={{ delay: 0.15, duration: 0.75 }}
+            className="mt-6 text-lg text-slate-300 sm:text-2xl lg:text-4xl"
           >
-            Gepassioneerd over het creëren van innovatieve oplossingen die een
-            verschil maken.
+            I&apos;m a full stack developer.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          <motion.a
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="flex flex-wrap gap-4"
+            transition={{ delay: 0.3, duration: 0.75 }}
+            href="#projects"
+            className="mt-10 inline-flex items-center gap-3 font-display text-sm uppercase tracking-[0.22em] text-accent transition-colors duration-300 hover:text-highlight"
           >
-            <a
-              href="#projects"
-              className="px-8 py-4 bg-accent hover:bg-highlight transition-colors duration-300 font-display text-sm tracking-wider uppercase relative group overflow-hidden"
-            >
-              <span className="relative z-10">Bekijk Projecten</span>
-              <div className="absolute inset-0 bg-highlight transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-            </a>
-            <a
-              href="#about"
-              className="px-8 py-4 border-2 border-accent hover:bg-accent hover:bg-opacity-10 transition-all duration-300 font-display text-sm tracking-wider uppercase"
-            >
-              Over Mij
-            </a>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-      >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-muted text-xs font-display tracking-widest uppercase">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-6 h-10 border-2 border-accent rounded-full flex items-start justify-center p-2"
-          >
-            <div className="w-1 h-2 bg-accent rounded-full"></div>
-          </motion.div>
+            View my work
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </motion.a>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
