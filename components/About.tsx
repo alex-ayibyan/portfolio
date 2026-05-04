@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { skills } from "@/data/skills";
+import { skillGroups } from "@/data/skills";
 
 export default function About() {
   const ref = useRef(null);
@@ -76,19 +76,39 @@ export default function About() {
             <h3 className="text-2xl font-display font-bold mb-6">
               Vaardigheden
             </h3>
-            <div className="flex flex-wrap gap-3">
-              {skills.map((skill, index) => (
-                <motion.span
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={
-                    isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }
-                  }
-                  transition={{ duration: 0.4, delay: 0.6 + index * 0.05 }}
-                  className="px-4 py-2 bg-secondary border border-accent border-opacity-30 text-accent text-sm font-display tracking-wider hover:bg-accent hover:text-white transition-all duration-300 cursor-default"
+            <div className="grid gap-4 sm:grid-cols-2">
+              {skillGroups.map((group, groupIndex) => (
+                <motion.div
+                  key={group.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  transition={{ duration: 0.5, delay: 0.55 + groupIndex * 0.1 }}
+                  className="border border-accent border-opacity-20 bg-secondary p-5"
                 >
-                  {skill}
-                </motion.span>
+                  <h4 className="mb-4 text-sm font-display uppercase tracking-[0.2em] text-accent">
+                    {group.title}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {group.skills.map((skill, skillIndex) => (
+                      <motion.span
+                        key={skill}
+                        initial={{ opacity: 0, scale: 0.92 }}
+                        animate={
+                          isInView
+                            ? { opacity: 1, scale: 1 }
+                            : { opacity: 0, scale: 0.92 }
+                        }
+                        transition={{
+                          duration: 0.35,
+                          delay: 0.7 + groupIndex * 0.1 + skillIndex * 0.04,
+                        }}
+                        className="px-3 py-2 bg-primary border border-accent border-opacity-25 text-accent text-xs font-display tracking-wider transition-colors duration-300 cursor-default"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>

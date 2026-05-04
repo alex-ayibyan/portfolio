@@ -1,25 +1,23 @@
-export const skills = [
-  "JavaScript",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "Express.js",
-  "Python",
-  "PostgreSQL",
-  "MongoDB",
-  "MySQL",
-  "REST APIs",
-  "GraphQL",
-  "Tailwind CSS",
-  "Bootstrap",
-  "Docker",
-  "Kubernetes",
-  "AWS",
-  "Azure",
-  "Git",
-  "GitHub",
-  "CI/CD",
-  "Linux",
-  "Agile/Scrum",
+export type SkillGroup = {
+  title: string;
+  skills: string[];
+};
+
+export const skillGroups: SkillGroup[] = [
+  {
+    title: "Frontend",
+    skills: ["JavaScript", "TypeScript", "React", "Next.js"],
+  },
+  {
+    title: "Backend",
+    skills: ["Node.js", "Express.js", "Python", "REST APIs", "GraphQL"],
+  },
+  {
+    title: "Databases",
+    skills: ["PostgreSQL", "MongoDB", "MySQL"],
+  },
+  {
+    title: "DevOps",
+    skills: ["Docker", "Kubernetes", "GitHub", "CI/CD"],
+  },
 ];

@@ -1,14 +1,19 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { projects } from "@/data/projects";
+import type { Project } from "@/lib/github";
 
-export default function Projects() {
+type ProjectsProps = {
+  projects: Project[];
+};
+
+export default function Projects({ projects }: ProjectsProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
 
@@ -124,26 +129,28 @@ export default function Projects() {
                 </div>
 
                 <div className="flex gap-4">
-                  <a
-                    href={project.link}
-                    className="inline-flex items-center gap-2 text-sm font-display text-accent hover:text-highlight transition-colors duration-300"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <span>Live Demo</span>
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  {project.link !== project.github && (
+                    <a
+                      href={project.link}
+                      className="inline-flex items-center gap-2 text-sm font-display text-accent hover:text-highlight transition-colors duration-300"
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                  </a>
+                      <span>Live Demo</span>
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
+                  )}
                   <a
                     href={project.github}
                     className="inline-flex items-center gap-2 text-sm font-display text-muted hover:text-white transition-colors duration-300"
@@ -242,12 +249,14 @@ export default function Projects() {
                 {/* Modal Content */}
                 <div className="p-8 md:p-12">
                   {/* Project Image */}
-                  <div className="w-full h-64 md:h-96 bg-primary mb-8 overflow-hidden border border-accent border-opacity-20">
+                  <div className="relative w-full h-64 md:h-96 bg-primary mb-8 overflow-hidden border border-accent border-opacity-20">
                     {selectedProject.image && !selectedProject.image.includes("placeholder") ? (
-                      <img
+                      <Image
                         src={selectedProject.image}
                         alt={`Screenshot van ${selectedProject.title}`}
                         className="w-full h-full object-contain"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 80vw"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -284,99 +293,109 @@ export default function Projects() {
                       Over het Project
                     </h4>
                     <p className="text-muted leading-relaxed">
-                      {selectedProject.fullDescription}
+                      {selectedProject.fullDescription ?? selectedProject.description}
                     </p>
                   </div>
 
                   {/* Features */}
-                  <div className="mb-8">
-                    <h4 className="text-xl font-display font-bold mb-4 text-white">
-                      Key Features
-                    </h4>
-                    <div className="grid md:grid-cols-2 gap-3">
-                      {selectedProject.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-start gap-3">
-                          <svg
-                            className="w-5 h-5 text-accent flex-shrink-0 mt-0.5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                          <span className="text-muted text-sm">{feature}</span>
-                        </div>
-                      ))}
+                  {!!selectedProject.features?.length && (
+                    <div className="mb-8">
+                      <h4 className="text-xl font-display font-bold mb-4 text-white">
+                        Key Features
+                      </h4>
+                      <div className="grid md:grid-cols-2 gap-3">
+                        {selectedProject.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-start gap-3">
+                            <svg
+                              className="w-5 h-5 text-accent flex-shrink-0 mt-0.5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                            <span className="text-muted text-sm">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Challenges */}
-                  <div className="mb-8">
-                    <h4 className="text-xl font-display font-bold mb-3 text-white">
-                      Uitdagingen & Oplossingen
-                    </h4>
-                    <p className="text-muted leading-relaxed">
-                      {selectedProject.challenges}
-                    </p>
-                  </div>
+                  {selectedProject.challenges && (
+                    <div className="mb-8">
+                      <h4 className="text-xl font-display font-bold mb-3 text-white">
+                        Uitdagingen & Oplossingen
+                      </h4>
+                      <p className="text-muted leading-relaxed">
+                        {selectedProject.challenges}
+                      </p>
+                    </div>
+                  )}
 
                   {/* Gallery */}
-                  <div className="mb-8">
-                    <h4 className="text-xl font-display font-bold mb-4 text-white">
-                      Screenshots
-                    </h4>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      {selectedProject.gallery.map((img, idx) => (
-                        <div
-                          key={idx}
-                          className="w-full h-48 bg-primary overflow-hidden border border-accent border-opacity-20 hover:border-opacity-50 transition-all duration-300"
-                        >
-                          {img && !img.includes("placeholder") ? (
-                            <img
-                              src={img}
-                              alt={`Screenshot ${idx + 1} van ${selectedProject.title}`}
-                              className="w-full h-full object-contain"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <span className="text-muted font-display text-xs">
-                                Screenshot {idx + 1}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                  {!!selectedProject.gallery?.length && (
+                    <div className="mb-8">
+                      <h4 className="text-xl font-display font-bold mb-4 text-white">
+                        Screenshots
+                      </h4>
+                      <div className="grid md:grid-cols-3 gap-4">
+                        {selectedProject.gallery.map((img, idx) => (
+                          <div
+                            key={idx}
+                            className="relative w-full h-48 bg-primary overflow-hidden border border-accent border-opacity-20 hover:border-opacity-50 transition-all duration-300"
+                          >
+                            {img && !img.includes("placeholder") ? (
+                              <Image
+                                src={img}
+                                alt={`Screenshot ${idx + 1} van ${selectedProject.title}`}
+                                className="w-full h-full object-contain"
+                                fill
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <span className="text-muted font-display text-xs">
+                                  Screenshot {idx + 1}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Links */}
                   <div className="flex flex-wrap gap-4 pt-6 border-t border-accent border-opacity-20">
-                    <a
-                      href={selectedProject.link}
-                      className="px-8 py-3 bg-accent hover:bg-highlight transition-colors duration-300 font-display text-sm tracking-wider uppercase inline-flex items-center gap-2"
-                    >
-                      <span>Live Demo</span>
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
+                    {selectedProject.link !== selectedProject.github && (
+                      <a
+                        href={selectedProject.link}
+                        className="px-8 py-3 bg-accent hover:bg-highlight transition-colors duration-300 font-display text-sm tracking-wider uppercase inline-flex items-center gap-2"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        />
-                      </svg>
-                    </a>
+                        <span>Live Demo</span>
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                      </a>
+                    )}
                     <a
                       href={selectedProject.github}
                       className="px-8 py-3 border-2 border-accent hover:bg-accent hover:bg-opacity-10 transition-all duration-300 font-display text-sm tracking-wider uppercase inline-flex items-center gap-2"

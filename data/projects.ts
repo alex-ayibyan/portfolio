@@ -1,25 +1,18 @@
-export type Project = {
-  id: number;
-  title: string;
-  description: string;
-  fullDescription: string;
-  features: string[];
-  challenges: string;
-  tags: string[];
-  link: string;
-  github: string;
-  image: string;
-  gallery: string[];
+import type { Project } from "@/lib/github";
+
+export type ProjectEnrichment = Partial<
+  Omit<Project, "id" | "github" | "tags">
+> & {
+  tags?: string[];
 };
 
-export const projects: Project[] = [
-    {
-    id: 1,
+export const githubEnrichments: Record<string, ProjectEnrichment> = {
+  FindMySpotWebsite: {
     title: "FindMySpot - Parkeerapp (In Progress)",
     description:
       "Een persoonlijk project gericht op het vereenvoudigen van parkeren. Gebouwd als gebruiksvriendelijke webapplicatie waarmee gebruikers snel beschikbare parkeerplaatsen kunnen vinden.",
     fullDescription:
-      "FindMySpot is een persoonlijk project ontwikkeld om het zoeken naar parkeerplaatsen sneller en efficiënter te maken. De applicatie biedt een intuïtieve interface waarmee gebruikers eenvoudig parkeerlocaties kunnen bekijken en navigeren. Het project focust op gebruiksgemak, responsive design en een vlotte gebruikerservaring.",
+      "FindMySpot is een persoonlijk project ontwikkeld om het zoeken naar parkeerplaatsen sneller en efficienter te maken. De applicatie biedt een intuitieve interface waarmee gebruikers eenvoudig parkeerlocaties kunnen bekijken en navigeren. Het project focust op gebruiksgemak, responsive design en een vlotte gebruikerservaring.",
     features: [
       "Overzicht van beschikbare parkeerlocaties",
       "Gebruiksvriendelijke en moderne interface",
@@ -29,80 +22,47 @@ export const projects: Project[] = [
       "Geoptimaliseerde prestaties en laadtijden",
     ],
     challenges:
-      "De grootste uitdaging was het ontwerpen van een eenvoudige en intuïtieve gebruikerservaring waarbij locatiegegevens overzichtelijk worden weergegeven. Dit werd opgelost door een duidelijke UI-structuur en performante front-end optimalisaties.",
-    tags: ["HTML", "CSS", "JavaScript", "Responsive Design"],
+      "De grootste uitdaging was het ontwerpen van een eenvoudige en intuitieve gebruikerservaring waarbij locatiegegevens overzichtelijk worden weergegeven. Dit werd opgelost door een duidelijke UI-structuur en performante front-end optimalisaties.",
+    tags: ["HTML", "CSS", "JavaScript", "Figma"],
     link: "https://alex-ayibyan.github.io/FindMySpotWebsite/",
-    github: "https://github.com/alex-ayibyan/FindMySpotWebsite",
     image: "/findmyspot_frontpage.png",
-    gallery: ["/findmyspot_mappage.png", "/findmyspot_directionpage.png", "/findmyspot_profilepage.png"],
+    gallery: [
+      "/findmyspot_mappage.png",
+      "/findmyspot_directionpage.png",
+      "/findmyspot_profilepage.png",
+    ],
   },
+};
+
+export const manualProjects: Project[] = [
   {
-    id: 2,
-    title: "Task Management App",
+    id: "gosmartlib",
+    title: "GoSmartLib (In Progress)",
     description:
-      "Een moderne taakbeheer applicatie met real-time synchronisatie, team collaboration features en geavanceerde filtering opties.",
+      "Een slimme bibliotheekbeheer applicatie ontwikkeld als teamproject binnen de bacheloropleiding IT. Integreert Google Books API voor boekgegevens en Smartschool SSO voor eenvoudig inloggen.",
     fullDescription:
-      "Een productiviteitstool die teams helpt om georganiseerd te blijven en effectief samen te werken. Met real-time updates kunnen teamleden direct zien wanneer taken worden gewijzigd of voltooid.",
+      "GoSmartLib is een teamproject ontwikkeld tijdens het softwareproject van de bacheloropleiding IT (2025-2026) in opdracht van de GO! Scholengroep. De applicatie biedt een uitgebreide oplossing voor bibliotheekbeheer met koppeling aan de Google Books API voor automatisch ophalen van boekgegevens en Smartschool SSO voor naadloze authenticatie. Het project werd agile ontwikkeld in sprints via GitLab.",
     features: [
-      "Real-time task synchronisatie met Socket.io",
-      "Team collaboration met comments en mentions",
-      "Drag-and-drop interface voor task management",
-      "Geavanceerde filters en zoekfunctionaliteit",
-      "Deadline tracking en notificaties",
-      "Project templates en recurring tasks",
+      "Beheer van boeken en uitleningen",
+      "Google Books API koppeling voor boekgegevens",
+      "Smartschool SSO authenticatie",
+      "Overzichtelijk dashboard",
+      "Zoek- en filterfunctionaliteit",
+      "Agile ontwikkelproces met sprints",
     ],
     challenges:
-      "Het synchroniseren van data tussen meerdere gebruikers in real-time was complex. Door het implementeren van conflict resolution en optimistic updates werd een soepele gebruikerservaring bereikt.",
-    tags: ["React", "Node.js", "Socket.io", "MongoDB"],
-    link: "#",
-    github: "#",
-    image: "/placeholder-project-2.jpg",
-    gallery: ["/placeholder-1.jpg", "/placeholder-2.jpg", "/placeholder-3.jpg"],
-  },
-  {
-    id: 3,
-    title: "AI Content Generator",
-    description:
-      "Een tool die AI gebruikt om content te genereren voor marketing doeleinden. Integreert met OpenAI API en biedt diverse templates.",
-    fullDescription:
-      "Een krachtige content generatie tool die marketeers helpt om snel hoogwaardige content te creëren. De tool maakt gebruik van state-of-the-art AI modellen en biedt aanpasbare templates voor verschillende use cases.",
-    features: [
-      "Integratie met OpenAI GPT modellen",
-      "10+ content templates (blog posts, social media, ads)",
-      "Tone of voice aanpassingen",
-      "Multi-language support",
-      "Content history en versioning",
-      "Export naar verschillende formaten",
+      "Het samenwerken in een team en het afstemmen van verschillende componenten vroeg om duidelijke communicatie en een goede taakverdeling. Door gebruik te maken van GitLab en agile methodieken werd dit efficient aangepakt.",
+    tags: ["Next.js", "Spring Boot", "MySQL"],
+    link: "https://gosmartlib06.tech",
+    github:
+      "https://gitlab.apstudent.be/bachelor-it/software-project/25-26/team-06/gosmartlib",
+    image: "/gosmartlib_homepage.png",
+    gallery: [
+      "/gosmartlib_cataloguepage.png",
+      "/gosmartlib_uploadpage.png",
+      "/gosmartlib_detailpage.png",
     ],
-    challenges:
-      "Het balanceren tussen AI-gegenereerde content en menselijke creativiteit was essentieel. Door iteratieve prompting en fine-tuning werd de output kwaliteit significant verbeterd.",
-    tags: ["Python", "FastAPI", "OpenAI", "React"],
-    link: "#",
-    github: "#",
-    image: "/placeholder-project-3.jpg",
-    gallery: ["/placeholder-1.jpg", "/placeholder-2.jpg", "/placeholder-3.jpg"],
-  },
-  {
-    id: 4,
-    title: "Analytics Dashboard",
-    description:
-      "Een comprehensive analytics dashboard voor data visualisatie met real-time updates en exportfunctionaliteit naar verschillende formaten.",
-    fullDescription:
-      "Een krachtig analytics platform dat complexe data omzet in begrijpelijke visualisaties. Perfect voor bedrijven die data-driven beslissingen willen maken met real-time inzichten.",
-    features: [
-      "Real-time data visualisatie met D3.js",
-      "Aanpasbare dashboards en widgets",
-      "Export naar PDF, CSV en Excel",
-      "Geautomatiseerde rapportage",
-      "Data filtering en segmentatie",
-      "Multi-user access controls",
-    ],
-    challenges:
-      "Het renderen van grote datasets zonder performance issues was cruciaal. Door data virtualisatie en efficiënte caching werd een vloeiende gebruikerservaring gegarandeerd.",
-    tags: ["Vue.js", "D3.js", "Express", "Redis"],
-    link: "#",
-    github: "#",
-    image: "/placeholder-project-4.jpg",
-    gallery: ["/placeholder-1.jpg", "/placeholder-2.jpg", "/placeholder-3.jpg"],
   },
 ];
+
+export const projects = manualProjects;

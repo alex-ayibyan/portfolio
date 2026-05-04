@@ -3,7 +3,34 @@
     "allow": [
       "Bash(wc -l /c/Users/alexa/Documents/Projects/Portfolio/portfolio-site/components/*.tsx /c/Users/alexa/Documents/Projects/Portfolio/portfolio-site/app/*.tsx)",
       "Bash(npx tsc:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(python -c ' *)",
+      "Bash(psql --version)",
+      "Bash(\"C:/Program Files/PostgreSQL/18/bin/pg_ctl.exe\" start -D \"C:/Program Files/PostgreSQL/18/data\")",
+      "Bash(sc query *)",
+      "Bash(\"C:/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -p 5432 -c \"SELECT version\\(\\);\")",
+      "Bash(PGPASSWORD=1234 \"C:/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -p 5432 -c \"SELECT version\\(\\);\")",
+      "Bash(PGPASSWORD=1234 \"C:/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -p 5432 -c \"CREATE DATABASE verkeersongevallen;\")",
+      "Read(//c/Users/alexa/Documents/Projects/verkeersongevallen-belgie/**)",
+      "Bash(PGPASSWORD=1234 \"C:/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -p 5432 -d verkeersongevallen -c \"SELECT COUNT\\(*\\) FROM ongevallen;\")",
+      "Bash(pip install *)",
+      "Bash(git config *)",
+      "Bash(find C:/Users/alexa/Documents/Projects/Portfolio/portfolio-site -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) ! -path \"./node_modules/*\" ! -path \"./.next/*\" -exec grep -l \"auth\\\\|role\\\\|permission\\\\|admin\\\\|mock\" {} \\\\;)",
+      "Bash(xargs grep *)",
+      "Bash(npm run *)",
+      "Bash(find ./app -type f \\\\\\( -name \"*.tsx\" -o -name \"*.ts\" -o -name \"*.jsx\" -o -name \"*.js\" \\\\\\) -exec wc -l {} +)",
+      "Bash(mkdir -p 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/lib' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/hooks' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/add/lib' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/add/hooks' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/components/GenreSelector' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/lib')",
+      "Bash(cp 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/types.ts' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/lib/types.ts')",
+      "Bash(cp 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/utils.ts' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/lib/utils.ts')",
+      "Bash(cp 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/styles.ts' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/lib/styles.ts')",
+      "Bash(cp 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/BookDetail.module.css' 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/lib/BookDetail.module.css')",
+      "Bash(rm 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/types.ts')",
+      "Bash(rm 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/utils.ts')",
+      "Bash(rm 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/styles.ts')",
+      "Bash(rm 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/BookDetail.module.css')",
+      "Bash(rm 'C:/Users/alexa/Documents/B3S2/Software Project/gosmartlib/gsl_frontend/app/books/[id]/useBookDetail.ts')",
+      "Bash(cat src/main/resources/application.properties)",
+      "Bash(cat src/main/resources/application.yml)"
     ]
   }
 }
