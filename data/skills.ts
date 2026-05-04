@@ -47,6 +47,7 @@ export const skillGroups: SkillGroup[] = [
   {
     title: "Databases",
     skills: [
+      { name: "SQL", logo: simpleIcon("postgresql", "4169E1") },
       { name: "PostgreSQL", logo: simpleIcon("postgresql", "4169E1") },
       { name: "MongoDB", logo: simpleIcon("mongodb", "47A248") },
       { name: "MySQL", logo: simpleIcon("mysql", "4479A1") },

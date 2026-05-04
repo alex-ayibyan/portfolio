@@ -6,7 +6,33 @@ export type ProjectEnrichment = Partial<
   tags?: string[];
 };
 
+export const hiddenRepos: string[] = [
+  "juice-shop",
+  "IctArchitecture",
+  "portfolio",
+];
+
 export const githubEnrichments: Record<string, ProjectEnrichment> = {
+  "verkeersongevallen-belgie": {
+    title: "Verkeersongevallen België",
+    description:
+      "Data-analyse van verkeersongevallen in België. Visualiseert trends, risicolocaties en statistieken op basis van open overheidsdata.",
+    fullDescription:
+      "Een data-analyseproject dat verkeersongevallendata van de Belgische overheid verwerkt en visualiseert. Het project brengt gevaarlijke locaties, tijdspatronen en risicogroepen in kaart via interactieve grafieken en kaarten. Doel is om inzicht te geven in verkeersveiligheid op basis van cijfers.",
+    features: [
+      "Visualisatie van ongevallen per regio en gemeente",
+      "Tijdsanalyse: uur, dag en seizoenspatronen",
+      "Risicogroepen en voertuigtypes in kaart gebracht",
+      "Interactieve grafieken en kaartweergave",
+      "Gebaseerd op open overheidsdata",
+    ],
+    tags: ["Python", "Pandas", "Matplotlib", "Jupyter"],
+    link: "https://trafficaccidents.streamlit.app/",
+  },
+  VanAschVisuals: {
+    image: "/vanaschvisuals_mainpage.png",
+    tags: ["Next.js"]
+  },
   FindMySpotWebsite: {
     title: "FindMySpot - Parkeerapp (In Progress)",
     description:

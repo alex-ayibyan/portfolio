@@ -38,13 +38,13 @@ export default function Hero() {
 
         {/* Bright grid revealed at mouse position */}
         <div
-          className="absolute inset-0 transition-opacity duration-300"
+          className="absolute inset-0"
           style={{
             backgroundImage: gridPattern,
             backgroundSize: "72px 72px",
-            opacity: 0.18,
-            WebkitMaskImage: `radial-gradient(circle 280px at ${mouse.x}px ${mouse.y}px, black 0%, transparent 100%)`,
-            maskImage: `radial-gradient(circle 280px at ${mouse.x}px ${mouse.y}px, black 0%, transparent 100%)`,
+            opacity: 0.55,
+            WebkitMaskImage: `radial-gradient(circle 380px at ${mouse.x}px ${mouse.y}px, black 30%, transparent 100%)`,
+            maskImage: `radial-gradient(circle 380px at ${mouse.x}px ${mouse.y}px, black 30%, transparent 100%)`,
           }}
         />
 
@@ -52,7 +52,7 @@ export default function Hero() {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(circle 220px at ${mouse.x}px ${mouse.y}px, rgba(255,77,90,0.10), transparent 100%)`,
+            background: `radial-gradient(circle 320px at ${mouse.x}px ${mouse.y}px, rgba(255,77,90,0.10), transparent 100%)`,
           }}
         />
 

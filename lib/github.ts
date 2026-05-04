@@ -1,4 +1,4 @@
-import { githubEnrichments, manualProjects } from "@/data/projects";
+import { githubEnrichments, hiddenRepos, manualProjects } from "@/data/projects";
 
 type GitHubRepo = {
   id: number;
@@ -58,7 +58,7 @@ export async function getProjects(): Promise<Project[]> {
     const repos: GitHubRepo[] = await res.json();
 
     githubProjects = repos
-      .filter((repo) => !repo.fork && !repo.archived)
+      .filter((repo) => !repo.fork && !repo.archived && !hiddenRepos.includes(repo.name))
       .map((repo) => {
         const enrichment = githubEnrichments[repo.name];
         const tags = Array.from(
