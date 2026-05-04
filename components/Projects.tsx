@@ -13,6 +13,7 @@ export default function Projects({ projects }: ProjectsProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
 
@@ -37,6 +38,7 @@ export default function Projects({ projects }: ProjectsProps) {
 
   const handleModalKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Escape") {
+      if (lightboxImage) { setLightboxImage(null); return; }
       setSelectedProject(null);
       return;
     }
@@ -228,7 +230,10 @@ export default function Projects({ projects }: ProjectsProps) {
                 </button>
 
                 <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,0.95fr)]">
-                  <div className="relative min-h-[280px] border-b border-white/10 lg:min-h-full lg:border-b-0 lg:border-r">
+                  <div
+                    className="relative min-h-[280px] border-b border-white/10 lg:min-h-full lg:border-b-0 lg:border-r cursor-zoom-in"
+                    onClick={() => selectedProject.image && setLightboxImage(selectedProject.image)}
+                  >
                     {selectedProject.image ? (
                       <Image
                         src={selectedProject.image}
@@ -336,13 +341,14 @@ export default function Projects({ projects }: ProjectsProps) {
                       {selectedProject.gallery.map((img, idx) => (
                         <div
                           key={idx}
-                          className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-[#1a1a1a]"
+                          onClick={() => setLightboxImage(img)}
+                          className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-[#1a1a1a] cursor-zoom-in transition-colors duration-200 hover:border-accent/50"
                         >
                           <Image
                             src={img}
                             alt={`${selectedProject.title} gallery image ${idx + 1}`}
                             fill
-                            className="object-contain"
+                            className="object-contain transition-transform duration-300 hover:scale-[1.03]"
                             sizes="(max-width: 768px) 100vw, 30vw"
                           />
                         </div>
@@ -350,6 +356,42 @@ export default function Projects({ projects }: ProjectsProps) {
                     </div>
                   </div>
                 )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {lightboxImage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setLightboxImage(null)}
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/92 p-4 backdrop-blur-sm cursor-zoom-out"
+            >
+              <motion.div
+                initial={{ scale: 0.92, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.92, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="relative max-h-[90vh] max-w-[90vw]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img
+                  src={lightboxImage}
+                  alt="Enlarged view"
+                  className="max-h-[90vh] max-w-[90vw] object-contain"
+                />
+                <button
+                  onClick={() => setLightboxImage(null)}
+                  className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center border border-white/10 bg-[#1a1a1a]/80 text-slate-300 transition-colors hover:border-accent hover:text-accent"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
               </motion.div>
             </motion.div>
           )}

@@ -41,10 +41,11 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: heroVisible ? -120 : 0, opacity: heroVisible ? 0 : 1 }}
       transition={{ duration: 0.35 }}
-      className={`fixed left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4 ${heroVisible ? "pointer-events-none" : ""}`}
+      className={`fixed left-0 right-0 top-0 z-50 pt-3 sm:pt-4 ${heroVisible ? "pointer-events-none" : ""}`}
     >
+      <div className="container mx-auto px-6">
       <div
-        className={`mx-auto flex w-full max-w-6xl items-center justify-between border px-4 py-3 sm:px-6 sm:py-4 transition-all duration-300 ${
+        className={`flex items-center justify-between border px-4 py-3 sm:px-6 sm:py-4 transition-all duration-300 ${
           scrolled
             ? "border-white/10 bg-[#1a1a1a]/90 shadow-[0_8px_40px_rgba(0,0,0,0.4)] backdrop-blur-xl"
             : "border-white/[0.06] bg-[#1a1a1a]/60 backdrop-blur-md"
@@ -90,11 +91,13 @@ export default function Navigation() {
           )}
         </button>
       </div>
+      </div>
 
       {menuOpen && (
+        <div className="container mx-auto px-6">
         <div
           id="mobile-menu"
-          className="mx-auto mt-px max-w-6xl border border-t-0 border-white/10 bg-[#1a1a1a]/95 px-6 py-4 backdrop-blur-xl md:hidden"
+          className="mt-px border border-t-0 border-white/10 bg-[#1a1a1a]/95 px-6 py-4 backdrop-blur-xl md:hidden"
         >
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
@@ -108,6 +111,7 @@ export default function Navigation() {
               </a>
             ))}
           </div>
+        </div>
         </div>
       )}
     </motion.nav>

@@ -38,7 +38,7 @@ export default function Hero() {
 
         {/* Bright grid revealed at mouse position */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 hidden sm:block"
           style={{
             backgroundImage: gridPattern,
             backgroundSize: "72px 72px",
@@ -50,7 +50,7 @@ export default function Hero() {
 
         {/* Accent glow at cursor */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none hidden sm:block"
           style={{
             background: `radial-gradient(circle 320px at ${mouse.x}px ${mouse.y}px, rgba(255,77,90,0.10), transparent 100%)`,
           }}
@@ -84,7 +84,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.75 }}
-            href="#projects"
+            href="#about"
             className="mt-10 inline-flex items-center gap-3 font-display text-sm uppercase tracking-[0.22em] text-accent transition-colors duration-300 hover:text-highlight"
           >
             View my work
