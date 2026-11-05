@@ -1,22 +1,21 @@
-import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Projects from "@/components/Projects";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import { getProjects } from "@/lib/github";
+// Dienstensite (branch feature/diensten-site).
+// De portfolio/CV-versie van deze pagina staat op tag `portfolio-cv-v1` en op branch `main`.
+import Nav from "@/components/diensten/Nav";
+import Hero from "@/components/diensten/Hero";
+import { Diensten, Sectoren, Pakketten, Werkwijze, Voet } from "@/components/diensten/Secties";
+import ContactForm from "@/components/diensten/ContactForm";
 
-export default async function Home() {
-  const projects = await getProjects();
-
+export default function Home() {
   return (
     <main className="relative">
-      <Navigation />
+      <Nav />
       <Hero />
-      <About />
-      <Projects projects={projects} />
-      <Contact />
-      <Footer />
+      <Diensten />
+      <Sectoren />
+      <Pakketten />
+      <Werkwijze />
+      <ContactForm />
+      <Voet />
     </main>
   );
 }

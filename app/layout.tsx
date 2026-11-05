@@ -8,34 +8,35 @@ const workSans = Work_Sans({
   variable: "--font-sans",
 });
 
+const titel = "Alex Ayibyan IT | Website, IT & sociale media voor ondernemers in Westerlo";
+const beschrijving =
+  "IT-hulp voor kleine zaken in Westerlo en omgeving: websites, sociale media, e-facturatie (Peppol), kantoor-IT en ondersteuning. Eén vast aanspreekpunt, vaste prijzen.";
+
 export const metadata: Metadata = {
-  title: "Alex Ayibyan | IT Professional & Developer",
-  description:
-    "Portfolio van Alex Ayibyan — IT-professional gespecialiseerd in webontwikkeling, backend-systemen en cloud-infrastructuur. Gevestigd in Antwerpen, België.",
+  title: titel,
+  description: beschrijving,
   authors: [{ name: "Alex Ayibyan" }],
   keywords: [
-    "Alex Ayibyan",
-    "portfolio",
-    "webontwikkeling",
-    "developer",
-    "Next.js",
-    "React",
-    "TypeScript",
-    "Antwerpen",
+    "IT Westerlo",
+    "website laten maken Westerlo",
+    "sociale media beheer",
+    "e-facturatie Peppol",
+    "IT-ondersteuning kmo",
+    "Tongerlo",
+    "Oevel",
+    "Heultje",
   ],
   openGraph: {
     type: "website",
     locale: "nl_BE",
-    title: "Alex Ayibyan | IT Professional & Developer",
-    description:
-      "Portfolio van Alex Ayibyan — IT-professional gespecialiseerd in webontwikkeling, backend-systemen en cloud-infrastructuur.",
-    siteName: "Alex Ayibyan Portfolio",
+    title: titel,
+    description: beschrijving,
+    siteName: "Alex Ayibyan IT",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Ayibyan | IT Professional & Developer",
-    description:
-      "Portfolio van Alex Ayibyan — IT-professional gespecialiseerd in webontwikkeling, backend-systemen en cloud-infrastructuur.",
+    title: titel,
+    description: beschrijving,
   },
   robots: {
     index: true,
