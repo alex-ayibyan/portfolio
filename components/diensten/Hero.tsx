@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 
-const troeven = ["Eén vast aanspreekpunt", "Vaste prijzen vooraf", "Bij u thuis, in uw zaak of op afstand"];
+const troeven = ["Eén vast aanspreekpunt", "Geduldige uitleg zonder vakjargon", "Bij u thuis, in uw zaak of op afstand"];
 
 const voorbeelden = [
   { titel: "AI & automatisering", tekst: "Minder administratie, meer tijd", href: "#ai" },
-  { titel: "Hulp aan huis", tekst: "Gsm, laptop, tv, printer en wifi", href: "#aan-huis" },
+  { titel: "Hulp aan huis", tekst: "Gsm, laptop, tv, printer en meer", href: "#aan-huis" },
   { titel: "Website & sociale media", tekst: "Gevonden worden door klanten", href: "#diensten" },
 ];
 

@@ -2,7 +2,6 @@ import Reveal, { SectionHeader } from "./Reveal";
 import {
   diensten,
   sectoren,
-  pakketten,
   stappen,
   aiVoorbeelden,
   aiResultaten,
@@ -12,7 +11,6 @@ import {
 const iconen: Record<string, string> = {
   website: "M3 5h18v12H3zM8 21h8M12 17v4",
   "sociale-media": "M7 10h10M7 14h6M5 4h14a2 2 0 012 2v9a2 2 0 01-2 2H9l-4 4V6a2 2 0 012-2z",
-  "e-facturatie": "M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6",
   "kantoor-it": "M5 12a10 10 0 0114 0M8.5 15.5a5 5 0 017 0M12 19h.01M2 8.5a15 15 0 0120 0",
   automatisering: "M4 12a8 8 0 0113.7-5.7L20 8M20 4v4h-4M20 12a8 8 0 01-13.7 5.7L4 16M4 20v-4h4",
 };
@@ -34,10 +32,10 @@ export function Diensten() {
         <SectionHeader
           label="Voor ondernemers"
           titel="Alles wat uw zaak digitaal nodig heeft, bij één persoon"
-          tekst="Van een nieuwe website tot een printer die niet wil meewerken: u belt één nummer en ik regel het."
+          tekst="Van een nieuwe website tot een printer die niet wil meewerken: u belt één persoon en ik regel het."
         />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {diensten.map((d, i) => (
             <Reveal key={d.id} delay={i * 0.05}>
               <article
@@ -210,57 +208,6 @@ export function Sectoren() {
   );
 }
 
-export function Pakketten() {
-  return (
-    <section id="pakketten" className="scroll-mt-20 bg-white py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeader
-          center
-          label="Pakketten"
-          titel="Duidelijke pakketten, vaste prijzen"
-          tekst="Kies een pakket of vraag een offerte op maat. U weet altijd vooraf waar u aan toe bent."
-        />
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {pakketten.map((p, i) => (
-            <Reveal key={p.naam} delay={i * 0.05}>
-              <div
-                className={`relative flex h-full flex-col rounded-3xl p-7 ${
-                  p.uitgelicht
-                    ? "bg-brand-50 ring-2 ring-brand-500"
-                    : "bg-cream ring-1 ring-sand"
-                }`}
-              >
-                {p.uitgelicht && (
-                  <span className="absolute -top-3 left-7 rounded-full bg-warm px-3 py-1 text-xs font-semibold text-ink">
-                    Ideaal om te starten
-                  </span>
-                )}
-                <p className="text-sm font-medium text-slate-500">{p.type}</p>
-                <h3 className="mt-2 text-xl font-semibold text-ink">{p.naam}</h3>
-                <p className="mt-4 flex-1 leading-7 text-slate-600">{p.tekst}</p>
-                <a
-                  href="#contact"
-                  className={`mt-6 inline-flex items-center justify-center rounded-full px-5 py-3 text-[15px] font-medium transition-colors ${
-                    p.uitgelicht
-                      ? "bg-brand-600 text-white hover:bg-brand-700"
-                      : "bg-white text-ink ring-1 ring-sand hover:ring-brand-500"
-                  }`}
-                >
-                  Prijs aanvragen
-                </a>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <p className="mt-8 text-center text-slate-500">
-          Iets anders nodig, zoals een webshop, netwerk of automatisering? Ik maak graag een offerte op maat.
-        </p>
-      </div>
-    </section>
-  );
-}
-
 export function Werkwijze() {
   return (
     <section id="werkwijze" className="scroll-mt-20 py-24">
@@ -298,7 +245,8 @@ export function Voet() {
         </div>
         <div className="flex flex-wrap gap-6 text-sm text-slate-600">
           <a href="#diensten" className="hover:text-brand-700">Diensten</a>
-          <a href="#pakketten" className="hover:text-brand-700">Pakketten</a>
+          <a href="#ai" className="hover:text-brand-700">AI &amp; automatisering</a>
+          <a href="#aan-huis" className="hover:text-brand-700">Hulp aan huis</a>
           <a href="#contact" className="hover:text-brand-700">Contact</a>
         </div>
       </div>

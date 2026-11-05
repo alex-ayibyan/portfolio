@@ -6,7 +6,7 @@ const items = [
   { href: "#diensten", label: "Voor bedrijven" },
   { href: "#ai", label: "AI & automatisering" },
   { href: "#aan-huis", label: "Hulp aan huis" },
-  { href: "#pakketten", label: "Pakketten" },
+  { href: "#werkwijze", label: "Werkwijze" },
 ];
 
 export default function Nav() {

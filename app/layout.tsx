@@ -10,7 +10,7 @@ const workSans = Work_Sans({
 
 const titel = "Alex Ayibyan | AI, IT-hulp en hulp aan huis in Westerlo";
 const beschrijving =
-  "Digitale hulp in Westerlo en omgeving: AI en automatisaties voor ondernemers, websites en sociale media, e-facturatie, en hulp aan huis bij uw gsm, laptop, tv, printer of wifi.";
+  "Digitale hulp in Westerlo en omgeving: AI en automatisaties voor ondernemers, websites en sociale media, en hulp aan huis bij uw gsm, laptop, tv, printer of software.";
 
 export const metadata: Metadata = {
   title: titel,
@@ -19,11 +19,10 @@ export const metadata: Metadata = {
   keywords: [
     "IT Westerlo",
     "computerhulp aan huis Westerlo",
-    "AI opleiding kmo",
+    "AI hulp kmo",
     "automatisatie kmo",
     "website laten maken Westerlo",
     "sociale media beheer",
-    "e-facturatie Peppol",
     "IT-ondersteuning kmo",
     "Tongerlo",
     "Oevel",

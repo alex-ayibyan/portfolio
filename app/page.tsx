@@ -7,7 +7,6 @@ import {
   AiAutomatisering,
   AanHuis,
   Sectoren,
-  Pakketten,
   Werkwijze,
   Voet,
 } from "@/components/diensten/Secties";
@@ -22,7 +21,6 @@ export default function Home() {
       <AiAutomatisering />
       <AanHuis />
       <Sectoren />
-      <Pakketten />
       <Werkwijze />
       <ContactForm />
       <Voet />
