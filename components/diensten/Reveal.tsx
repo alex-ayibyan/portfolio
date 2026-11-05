@@ -13,10 +13,10 @@ export default function Reveal({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay }}
       className={className}
     >
       {children}
@@ -24,10 +24,24 @@ export default function Reveal({
   );
 }
 
-export function SectionLabel({ children }: { children: React.ReactNode }) {
+export function SectionHeader({
+  label,
+  titel,
+  tekst,
+  center = false,
+}: {
+  label: string;
+  titel: string;
+  tekst?: string;
+  center?: boolean;
+}) {
   return (
-    <p className="mb-4 font-display text-xs uppercase tracking-[0.24em] text-accent">
-      {children}
-    </p>
+    <Reveal className={`mb-12 max-w-2xl ${center ? "mx-auto text-center" : ""}`}>
+      <span className="inline-block rounded-full bg-brand-50 px-3 py-1 text-sm font-medium text-brand-700">
+        {label}
+      </span>
+      <h2 className="mt-4 text-3xl font-semibold leading-tight text-ink sm:text-4xl">{titel}</h2>
+      {tekst && <p className="mt-4 text-lg leading-8 text-slate-600">{tekst}</p>}
+    </Reveal>
   );
 }
