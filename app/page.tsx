@@ -2,7 +2,15 @@
 // De portfolio/CV-versie van deze pagina staat op tag `portfolio-cv-v1` en op branch `main`.
 import Nav from "@/components/diensten/Nav";
 import Hero from "@/components/diensten/Hero";
-import { Diensten, Sectoren, Pakketten, Werkwijze, Voet } from "@/components/diensten/Secties";
+import {
+  Diensten,
+  AiAutomatisering,
+  AanHuis,
+  Sectoren,
+  Pakketten,
+  Werkwijze,
+  Voet,
+} from "@/components/diensten/Secties";
 import ContactForm from "@/components/diensten/ContactForm";
 
 export default function Home() {
@@ -11,6 +19,8 @@ export default function Home() {
       <Nav />
       <Hero />
       <Diensten />
+      <AiAutomatisering />
+      <AanHuis />
       <Sectoren />
       <Pakketten />
       <Werkwijze />

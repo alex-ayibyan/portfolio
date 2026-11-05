@@ -55,7 +55,7 @@ export default function ContactForm() {
               </h2>
               <p className="mt-4 text-lg leading-8 text-brand-50">
                 Vertel kort waarmee ik u kan helpen. Ik neem binnen één werkdag contact op en kom graag
-                eens langs in uw zaak.
+                eens langs, in uw zaak of bij u thuis.
               </p>
               <dl className="mt-8 space-y-5">
                 <div>
@@ -83,7 +83,7 @@ export default function ContactForm() {
                     </div>
                     <div>
                       <label htmlFor="company" className={label}>Zaak <span className="font-normal text-slate-400">(optioneel)</span></label>
-                      <input id="company" type="text" value={form.company} onChange={wijzig} disabled={bezig} className={veld} placeholder="Naam van uw zaak" />
+                      <input id="company" type="text" value={form.company} onChange={wijzig} disabled={bezig} className={veld} placeholder="Leeg laten als particulier" />
                     </div>
                   </div>
                   <div>
@@ -92,7 +92,7 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <label htmlFor="message" className={label}>Waarmee kan ik helpen?</label>
-                    <textarea id="message" required rows={5} value={form.message} onChange={wijzig} disabled={bezig} className={`${veld} resize-none`} placeholder="Bv. mijn website is verouderd, ik wil online afspraken, mijn wifi valt weg..." />
+                    <textarea id="message" required rows={5} value={form.message} onChange={wijzig} disabled={bezig} className={`${veld} resize-none`} placeholder="Bv. ik wil AI leren gebruiken in mijn zaak, mijn nieuwe gsm instellen, mijn printer werkt niet..." />
                   </div>
 
                   {status === "error" && <p className="text-sm text-red-600" role="alert">{fout}</p>}

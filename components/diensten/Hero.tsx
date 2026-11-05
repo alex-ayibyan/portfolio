@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 
-const troeven = ["Eén vast aanspreekpunt", "Vaste prijzen vooraf", "Ter plaatse of op afstand"];
+const troeven = ["Eén vast aanspreekpunt", "Vaste prijzen vooraf", "Bij u thuis, in uw zaak of op afstand"];
 
 const voorbeelden = [
-  { titel: "Een website die werkt", tekst: "Snel, veilig en mooi op gsm" },
-  { titel: "Actieve sociale media", tekst: "Regelmatig berichten en verhalen" },
-  { titel: "E-facturatie in orde", tekst: "Klaar voor Peppol" },
+  { titel: "AI & automatisering", tekst: "Minder administratie, meer tijd", href: "#ai" },
+  { titel: "Hulp aan huis", tekst: "Gsm, laptop, tv, printer en wifi", href: "#aan-huis" },
+  { titel: "Website & sociale media", tekst: "Gevonden worden door klanten", href: "#diensten" },
 ];
 
 function Vinkje() {
@@ -37,7 +37,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm text-slate-600 shadow-sm ring-1 ring-sand"
           >
             <span className="h-2 w-2 rounded-full bg-brand-500" aria-hidden="true" />
-            Voor ondernemers in Westerlo en omgeving
+            Voor ondernemers én particulieren in Westerlo en omgeving
           </motion.span>
 
           <motion.h1
@@ -46,7 +46,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="mt-6 text-4xl font-semibold leading-[1.15] text-ink sm:text-5xl lg:text-6xl"
           >
-            Uw website, computers en sociale media{" "}
+            Digitale hulp in uw zaak en bij u thuis,{" "}
             <span className="text-brand-600">zorgeloos geregeld</span>
           </motion.h1>
 
@@ -56,8 +56,9 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.12 }}
             className="mt-6 max-w-xl text-lg leading-8 text-slate-600"
           >
-            Ik ben Alex uit Westerlo. Ik help kleine zaken met hun website, IT en online
-            zichtbaarheid, zodat u zich kan focussen op uw klanten. In gewone taal, met snelle hulp.
+            Ik ben Alex uit Westerlo. Ik help ondernemers slimmer werken met AI en automatisaties,
+            zorg voor hun website en IT, en kom ook bij u thuis langs voor uw gsm, laptop, tv of
+            printer. In gewone taal, met snelle hulp.
           </motion.p>
 
           <motion.div
@@ -100,14 +101,19 @@ export default function Hero() {
             <p className="text-sm font-medium text-slate-500">Waarmee ik u kan helpen</p>
             <ul className="mt-5 space-y-4">
               {voorbeelden.map((v) => (
-                <li key={v.titel} className="flex items-center gap-4 rounded-2xl bg-cream p-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50">
-                    <Vinkje />
-                  </span>
-                  <div>
-                    <p className="font-medium text-ink">{v.titel}</p>
-                    <p className="text-sm text-slate-500">{v.tekst}</p>
-                  </div>
+                <li key={v.titel}>
+                  <a
+                    href={v.href}
+                    className="flex items-center gap-4 rounded-2xl bg-cream p-4 transition-colors hover:bg-brand-50"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white">
+                      <Vinkje />
+                    </span>
+                    <div>
+                      <p className="font-medium text-ink">{v.titel}</p>
+                      <p className="text-sm text-slate-500">{v.tekst}</p>
+                    </div>
+                  </a>
                 </li>
               ))}
             </ul>

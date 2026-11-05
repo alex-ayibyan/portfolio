@@ -61,18 +61,48 @@ export const diensten: Dienst[] = [
       "Snelle hulp op afstand of ter plaatse",
     ],
   },
+];
+
+// AI & automatisering: concrete voorbeelden van wat het oplevert
+export const aiVoorbeelden = [
   {
-    id: "automatisering",
-    titel: "Automatisering & slimme tools",
-    intro:
-      "Veel administratief werk kan vanzelf gebeuren. Dat bespaart u elke week tijd.",
-    punten: [
-      "Formulieren die automatisch in een lijst of agenda komen",
-      "Koppelingen tussen webshop, kassa en facturatie",
-      "AI-hulp voor teksten, mails en offertes",
-      "Praktische opleidingen op maat van uw team",
-    ],
+    titel: "AI leren gebruiken",
+    tekst:
+      "Praktische uitleg over ChatGPT, Copilot, Gemini of Claude: wat kan het, wat niet, en hoe gebruikt u het veilig met klantgegevens.",
   },
+  {
+    titel: "Sneller schrijven",
+    tekst:
+      "Offertes, mails, vacatures en berichten voor sociale media in een paar minuten in plaats van een uur, in uw eigen stijl.",
+  },
+  {
+    titel: "Taken die vanzelf gebeuren",
+    tekst:
+      "Een aanvraag via uw website komt automatisch in uw agenda, een bestelling maakt zelf een factuur, een afspraak stuurt zelf een herinnering.",
+  },
+  {
+    titel: "Slimme assistent op maat",
+    tekst:
+      "Een AI-assistent die vragen van klanten beantwoordt, mails sorteert of documenten samenvat, afgestemd op uw zaak.",
+  },
+];
+
+export const aiResultaten = [
+  "Minder tijd kwijt aan administratie",
+  "Geen overtypen tussen programma's",
+  "Sneller antwoord voor uw klanten",
+];
+
+// Hulp aan huis voor particulieren
+export const thuisHulp = [
+  { titel: "Nieuwe gsm of tablet", tekst: "Instellen, contacten, foto's en WhatsApp overzetten van uw oude toestel." },
+  { titel: "Laptop of computer", tekst: "Advies bij aankoop, installeren, oude bestanden overzetten en trage pc's opkuisen." },
+  { titel: "Tv en streaming", tekst: "Smart-tv, Netflix, Streamz, Chromecast of decoder aansluiten en uitleggen." },
+  { titel: "Printer en scanner", tekst: "Printer installeren op uw pc, laptop en gsm, scannen naar uw computer." },
+  { titel: "Wifi in huis", tekst: "Overal goed bereik, ook boven en in de tuin, en uw netwerk veilig ingesteld." },
+  { titel: "Software en problemen", tekst: "Programma's die niet werken, foutmeldingen, updates, mail of apps die haperen." },
+  { titel: "Foto's en back-ups", tekst: "Uw foto's en documenten veilig bewaren en terugvinden, op de computer en in de cloud." },
+  { titel: "Slimme toestellen", tekst: "Slimme lampen, deurbel, camera of luidspreker installeren en koppelen aan uw gsm." },
 ];
 
 export const sectoren = [
@@ -91,6 +121,20 @@ export const pakketten = [
     tekst:
       "Ik kom langs en bekijk uw computers, wifi, back-ups, website en Google-profiel. U krijgt een kort rapport met concrete tips.",
     uitgelicht: true,
+  },
+  {
+    naam: "Hulp aan huis",
+    type: "Per bezoek",
+    tekst:
+      "Ik kom bij u thuis langs voor uw gsm, laptop, tv, printer, wifi of andere problemen, en leg rustig uit hoe alles werkt.",
+    uitgelicht: false,
+  },
+  {
+    naam: "AI & automatisering",
+    type: "Eenmalig",
+    tekst:
+      "Een opleiding op maat voor u of uw team, plus twee of drie automatisaties die meteen tijd besparen in uw zaak.",
+    uitgelicht: false,
   },
   {
     naam: "Starterspakket",

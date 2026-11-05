@@ -8,9 +8,9 @@ const workSans = Work_Sans({
   variable: "--font-sans",
 });
 
-const titel = "Alex Ayibyan IT | Website, IT & sociale media voor ondernemers in Westerlo";
+const titel = "Alex Ayibyan | AI, IT-hulp en hulp aan huis in Westerlo";
 const beschrijving =
-  "IT-hulp voor kleine zaken in Westerlo en omgeving: websites, sociale media, e-facturatie (Peppol), kantoor-IT en ondersteuning. Eén vast aanspreekpunt, vaste prijzen.";
+  "Digitale hulp in Westerlo en omgeving: AI en automatisaties voor ondernemers, websites en sociale media, e-facturatie, en hulp aan huis bij uw gsm, laptop, tv, printer of wifi.";
 
 export const metadata: Metadata = {
   title: titel,
@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Alex Ayibyan" }],
   keywords: [
     "IT Westerlo",
+    "computerhulp aan huis Westerlo",
+    "AI opleiding kmo",
+    "automatisatie kmo",
     "website laten maken Westerlo",
     "sociale media beheer",
     "e-facturatie Peppol",

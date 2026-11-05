@@ -1,5 +1,13 @@
 import Reveal, { SectionHeader } from "./Reveal";
-import { diensten, sectoren, pakketten, stappen } from "@/data/diensten";
+import {
+  diensten,
+  sectoren,
+  pakketten,
+  stappen,
+  aiVoorbeelden,
+  aiResultaten,
+  thuisHulp,
+} from "@/data/diensten";
 
 const iconen: Record<string, string> = {
   website: "M3 5h18v12H3zM8 21h8M12 17v4",
@@ -24,12 +32,12 @@ export function Diensten() {
     <section id="diensten" className="scroll-mt-20 bg-white py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader
-          label="Diensten"
+          label="Voor ondernemers"
           titel="Alles wat uw zaak digitaal nodig heeft, bij één persoon"
           tekst="Van een nieuwe website tot een printer die niet wil meewerken: u belt één nummer en ik regel het."
         />
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {diensten.map((d, i) => (
             <Reveal key={d.id} delay={i * 0.05}>
               <article
@@ -50,20 +58,127 @@ export function Diensten() {
               </article>
             </Reveal>
           ))}
-          <Reveal delay={0.25}>
-            <div className="flex h-full flex-col justify-center rounded-3xl bg-brand-600 p-7 text-white">
+        </div>
+
+        <Reveal delay={0.1} className="mt-6">
+          <div className="flex flex-col gap-5 rounded-3xl bg-brand-600 p-7 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
+            <div>
               <h3 className="text-xl font-semibold">Niet zeker wat u nodig heeft?</h3>
-              <p className="mt-3 leading-7 text-brand-50">
+              <p className="mt-2 leading-7 text-brand-50">
                 Ik kom vrijblijvend langs, kijk samen met u waar het beter kan en geef eerlijk advies.
               </p>
+            </div>
+            <a
+              href="#contact"
+              className="inline-flex w-fit shrink-0 items-center rounded-full bg-white px-6 py-3 font-medium text-brand-700 transition-colors hover:bg-brand-50"
+            >
+              Maak een afspraak
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+export function AiAutomatisering() {
+  return (
+    <section id="ai" className="scroll-mt-20 py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="relative overflow-hidden rounded-[2rem] bg-ink px-7 py-14 sm:px-12 lg:px-14">
+          <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-brand-500/30 blur-3xl" aria-hidden="true" />
+          <div className="absolute -bottom-24 left-10 h-64 w-64 rounded-full bg-warm/20 blur-3xl" aria-hidden="true" />
+
+          <div className="relative grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+            <Reveal>
+              <span className="inline-flex items-center gap-2 rounded-full bg-warm px-3 py-1 text-sm font-semibold text-ink">
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2l1.9 5.6L19.5 9.5l-5.6 1.9L12 17l-1.9-5.6L4.5 9.5l5.6-1.9zM19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z" />
+                </svg>
+                AI &amp; automatisering
+              </span>
+              <h2 className="mt-5 text-3xl font-semibold leading-tight text-white sm:text-4xl">
+                Laat AI het saaie werk doen, zodat u tijd overhoudt voor uw klanten
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-slate-300">
+                AI is geen toekomstmuziek meer. Ik toon u in gewone taal hoe u het vandaag al gebruikt,
+                en zet automatisaties op die elke week uren besparen.
+              </p>
+              <ul className="mt-7 space-y-3">
+                {aiResultaten.map((r) => (
+                  <li key={r} className="flex items-center gap-3 text-white">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-500/30 text-brand-100" aria-hidden="true">
+                      ✓
+                    </span>
+                    {r}
+                  </li>
+                ))}
+              </ul>
               <a
                 href="#contact"
-                className="mt-6 inline-flex w-fit items-center rounded-full bg-white px-6 py-3 font-medium text-brand-700 transition-colors hover:bg-brand-50"
+                className="mt-9 inline-flex items-center rounded-full bg-white px-7 py-3.5 font-medium text-ink transition-colors hover:bg-brand-50"
               >
-                Maak een afspraak
+                Ontdek wat AI voor u kan doen
               </a>
+            </Reveal>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {aiVoorbeelden.map((v, i) => (
+                <Reveal key={v.titel} delay={i * 0.06}>
+                  <div className="h-full rounded-2xl bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur">
+                    <p className="text-sm font-semibold text-warm">0{i + 1}</p>
+                    <h3 className="mt-2 text-lg font-semibold text-white">{v.titel}</h3>
+                    <p className="mt-2 leading-7 text-slate-300">{v.tekst}</p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function AanHuis() {
+  return (
+    <section id="aan-huis" className="scroll-mt-20 bg-white py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <div className="lg:sticky lg:top-28">
+            <SectionHeader
+              label="Hulp aan huis"
+              titel="Ook bij u thuis help ik u graag verder"
+              tekst="Nieuwe gsm, een printer die niet wil of een tv vol knoppen? Ik kom langs, installeer alles en leg rustig uit hoe het werkt. Zonder vakjargon en met alle geduld."
+            />
+            <Reveal className="-mt-4">
+              <div className="rounded-2xl bg-cream p-5 ring-1 ring-sand">
+                <p className="font-medium text-ink">Ideaal voor wie</p>
+                <ul className="mt-3 space-y-2 text-[15px] text-slate-600">
+                  <li>· net een nieuw toestel kocht</li>
+                  <li>· vastloopt met een programma of app</li>
+                  <li>· graag eens rustig uitleg krijgt, ook senioren</li>
+                </ul>
+              </div>
+              <a
+                href="#contact"
+                className="mt-6 inline-flex items-center rounded-full bg-brand-600 px-7 py-3.5 font-medium text-white transition-colors hover:bg-brand-700"
+              >
+                Vraag hulp aan huis
+              </a>
+            </Reveal>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {thuisHulp.map((t, i) => (
+              <Reveal key={t.titel} delay={i * 0.04}>
+                <div className="h-full rounded-2xl bg-cream p-6 ring-1 ring-sand">
+                  <h3 className="font-semibold text-ink">{t.titel}</h3>
+                  <p className="mt-2 leading-7 text-slate-600">{t.tekst}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -75,7 +190,7 @@ export function Sectoren() {
     <section id="sectoren" className="scroll-mt-20 py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader
-          label="Voor wie"
+          label="Per sector"
           titel="Oplossingen op maat van uw zaak"
           tekst="Elke zaak is anders. Enkele voorbeelden van wat ik voor uw sector kan opzetten."
         />
@@ -106,7 +221,7 @@ export function Pakketten() {
           tekst="Kies een pakket of vraag een offerte op maat. U weet altijd vooraf waar u aan toe bent."
         />
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {pakketten.map((p, i) => (
             <Reveal key={p.naam} delay={i * 0.05}>
               <div
